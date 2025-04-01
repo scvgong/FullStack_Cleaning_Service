@@ -1,0 +1,23 @@
+# Java
+/backend/build/
+/backend/.gradle/
+/backend/out/
+
+# Node
+/frontend/node_modules/
+/frontend/dist/
+
+# IDE 설정 파일
+*.iml
+.idea/
+.vscode/
+
+# 로그 파일
+*.log
+
+# OS에서 자동 생성되는 파일
+.DS_Store
+Thumbs.db
+
+# 환경 설정
+.env
