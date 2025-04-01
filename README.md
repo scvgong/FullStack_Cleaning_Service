@@ -1,54 +1,7 @@
-🧾 개발 히스토리 - Fullstack Cleaning Service
+## 📚 개발 히스토리 요약
 
-이 문서는 백엔드/프론트엔드 구축 과정과 문제 해결 과정을 시간순으로 정리한 개발 히스토리입니다.
-
-🔹 1단계: 백엔드 프로젝트 초기 구축
-
-Spring Initializr를 통해 Java 21 기반의 Spring Boot 프로젝트 생성
-
-의존성 설정: Web, MyBatis, Oracle JDBC, Devtools, Lombok 등
-
-QuoteRequestDto 클래스 작성 (견적 요청 DTO)
-
-Oracle DB 연결 설정 (application.properties)
-
-🔹 2단계: MyBatis 매핑 및 시퀀스 문제
-
-QuoteRequestMapper.xml 작성 중 시퀀스 관련 에러 발생
-
-시퀀스 QUOTE_REQUEST_SEQ_MY가 SYSTEM 계정에 존재해서 접근 불가 문제 발생 → DBeaver로 SYSTEM 계정 로그인 후 삭제
-
-새로운 스키마 CLEAN_SERVICE에서 시퀀스 재생성 완료
-
-🔹 3단계: 문자셋 오류 해결
-
-오류 메시지: ORA-17056: 지원되지 않는 문자 집합 (KO16MSWIN949)
-
-해결: Oracle JDBC 문자셋 관련 라이브러리 orai18n.jar 다운받아 backend/libs에 수동 복사 후 빌드 설정 추가
-
-🔹 4단계: Postman으로 API 테스트
-
-Postman 설치 및 실행 완료
-
-/api/quotes POST 요청 테스트 → 404 → 경로 수정으로 해결
-
-이후 500 에러 → 시퀀스 접근, 매퍼 매핑 등 순차적으로 수정하며 해결
-
-견적 요청 정상 DB 저장 확인됨
-
-🔹 5단계: GitHub 초기화 및 버전 관리
-
-로컬에서 git init → .gitignore 설정 (/build, .idea, node_modules 등)
-
-GitHub 원격 저장소 생성 후 git push 완료
-
-✅ 현재 상태
-
-백엔드 빌드 및 API 테스트 완료
-
-견적 요청 API 정상 작동 및 DB 저장 확인
-
-프론트엔드는 아직 미구현 상태
-
-다음 단계: 프론트엔드 구현 및 연동 진행 예정
-
+- 초기 환경설정 완료 (백엔드 Gradle, Oracle 연결)
+- API 테스트: Postman을 활용한 견적 저장 성공
+- 시퀀스 오류 해결 (ORA-02289 → DBeaver 통해 제거 및 재생성)
+- 문자 인코딩 오류 해결 (ORA-17056 → orai18n.jar 추가)
+- GitHub 연동 및 README/DEV_HISTORY 정리
