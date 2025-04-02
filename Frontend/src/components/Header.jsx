@@ -8,7 +8,7 @@ const Header = () => {
           to="/"
           className="text-2xl font-extrabold text-blue-700 hover:opacity-80"
         >
-          사당새집연구소
+          청소 전문 업체
         </Link>
         <ul className="flex space-x-6 text-sm font-medium text-gray-700">
           <li className="group relative hover:bg-gray-50">

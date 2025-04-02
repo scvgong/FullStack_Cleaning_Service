@@ -13,6 +13,8 @@ const QuoteRequest = () => {
     agree: false,
   });
 
+  const [image, setImage] = useState(null);
+
   const [errors, setErrors] = useState({});
   const [submitSuccess, setSubmitSuccess] = useState(null);
 
@@ -63,6 +65,11 @@ const QuoteRequest = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const required = ["serviceType", "spaceType", "name", "phone", "email"];
@@ -86,10 +93,17 @@ const QuoteRequest = () => {
     }
 
     try {
+      const formData = new FormData();
+      for (const key in form) {
+        formData.append(key, form[key]);
+      }
+      if (image) {
+        formData.append("image", image);
+      }
+
       const response = await fetch("http://localhost:8080/api/quotes", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: formData,
       });
       console.log("response", response);
 
@@ -107,6 +121,7 @@ const QuoteRequest = () => {
           message: "",
           agree: false,
         });
+        setImage(null);
         setErrors({});
         setSubmitSuccess(true);
       } else {
@@ -173,6 +188,15 @@ const QuoteRequest = () => {
             value={form.area}
             onChange={handleChange}
             className="w-full border rounded px-3 py-2"
+          />
+        </div>
+        <div>
+          <label className="block font-medium">이미지 업로드</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full"
           />
         </div>
         <div>
