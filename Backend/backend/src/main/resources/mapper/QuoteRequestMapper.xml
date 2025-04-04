@@ -10,11 +10,11 @@
         </selectKey>
         INSERT INTO quote_request (
         id, service_type, space_type, area,
-        name, phone, email, location, message
+        name, phone, email, location, message, image_path
         )
         VALUES (
         #{id}, #{serviceType}, #{spaceType}, #{area},
-        #{name}, #{phone}, #{email}, #{location}, #{message}
+        #{name}, #{phone}, #{email}, #{location}, #{message}, #{imagePath}
         )
     </insert>
 
