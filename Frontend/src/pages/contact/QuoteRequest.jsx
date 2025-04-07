@@ -92,15 +92,16 @@ const QuoteRequest = () => {
       return;
     }
 
-    try {
-      const formData = new FormData();
-      for (const key in form) {
-        formData.append(key, form[key]);
-      }
-      if (image) {
-        formData.append("image", image);
-      }
+    const formData = new FormData();
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(form)], { type: "application/json" })
+    );
+    if (image) {
+      formData.append("image", image);
+    }
 
+    try {
       const response = await fetch("http://localhost:8080/api/quotes", {
         method: "POST",
         body: formData,
