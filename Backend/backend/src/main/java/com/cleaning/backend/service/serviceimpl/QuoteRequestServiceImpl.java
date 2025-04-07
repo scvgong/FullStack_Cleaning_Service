@@ -11,15 +11,24 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
+import jakarta.annotation.PostConstruct;
 
 @RequiredArgsConstructor
 @Service
 public class QuoteRequestServiceImpl implements QuoteRequestService {
 
-    private final QuoteRequestMapper quoteRequestMapper;
-
     @Value("${file.upload-dir}")
     private String uploadDir;
+
+    private final QuoteRequestMapper quoteRequestMapper;
+
+    @PostConstruct
+    public void initUploadDir() {
+        File uploadPath = new File(uploadDir);
+        if (!uploadPath.exists()) {
+            uploadPath.mkdirs(); // 서버 시작 시 자동 생성
+        }
+    }
 
     @Override
     public void saveQuote(QuoteRequestDto dto, MultipartFile image) {
