@@ -22,5 +22,6 @@ Thumbs.db
 # 환경 설정
 .env
 
-# 이미지 업로드 파일 제외
-backend/uploads/
+# .gitignore
+backend/uploads/*.jpg
+backend/uploads/*.png
