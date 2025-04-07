@@ -17,10 +17,10 @@ public class QuoteController {
 
     private final QuoteRequestService quoteRequestService;
 
-    @PostMapping(value = "/api/quote", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> receiveQuote(@RequestPart("data") QuoteRequestDto dto) {
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> receiveQuote(@RequestPart("data") QuoteRequestDto dto, @RequestPart(value="image", required=false) MultipartFile image) {
 
-        quoteRequestService.saveQuote(dto);
+        quoteRequestService.saveQuote(dto, image);
         return ResponseEntity.ok("견적 요청이 접수되었습니다.");
     }
 }
