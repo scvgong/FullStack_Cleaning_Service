@@ -1,6 +1,7 @@
 package com.cleaning.backend.model;
 
 import lombok.Data;
+import java.util.List;
 
 // 견적 요청 데이터 모델
 @Data
@@ -15,4 +16,5 @@ public class QuoteRequest {
     private String location;
     private String message;
     private String imagePath;
+    private List<String> imagePaths;
 }

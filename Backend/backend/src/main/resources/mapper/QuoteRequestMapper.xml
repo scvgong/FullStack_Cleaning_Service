@@ -18,7 +18,19 @@
         )
     </insert>
 
+    <insert id="insertQuoteImage">
+        INSERT INTO QUOTE_IMAGE (ID, QUOTE_REQUEST_ID, FILE_PATH)
+        VALUES (QUOTE_IMAGE_SEQ.NEXTVAL, #{quoteRequestId}, #{filePath})
+    </insert>
+
+
     <select id="findById" resultType="com.cleaning.backend.model.QuoteRequest" parameterType="long">
         SELECT * FROM quote_request WHERE id = #{id}
     </select>
+
+    <select id="getAllQuotes" resultType="com.cleaning.backend.model.QuoteRequest">
+        SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
+    </select>
+
 </mapper>
+
