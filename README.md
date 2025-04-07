@@ -34,7 +34,8 @@ Fullstack-cleaning-service/
 │   ├── src/main/java/com/cleaning/backend
 │   ├── resources/mapper/QuoteRequestMapper.xml
 │   ├── build.gradle
-│   └── application.properties
+│   ├── application.properties
+│   └── uploads/           # 이미지 저장 폴더 (.gitkeep 포함)
 ├── frontend/              # Vite + React 프로젝트
 │   ├── src/
 │   ├── index.html
@@ -51,6 +52,7 @@ Fullstack-cleaning-service/
 - 입력 유효성 검사
 - 견적 요청 내역 DB 저장
 - 이메일 자동 전송 (Spring Mail)
+- 사진 포함 건적 요청
 
 ---
 
@@ -103,9 +105,20 @@ npm run dev
 - **Postman 테스트 500 에러**  
   > Mapper XML의 SQL 문법, DTO/Model 경로 문제 수정 → DB 정상 저장 확인
 
+- **Oracle DB 계정 뷰티 게이트 모드 (ORA-28000)**  
+  > SYSTEM 계정 로그인 맞는 비밀번호 확인 등… DBeaver 통해 계정 재건 후 접속 가능
+
+- **이미지 저장 경로 설정 & CORS 문제**  
+  > `file.upload-dir` 을 `application.properties` 에서 환경변수로 설정하고 `@PostConstruct` 역할으로 uploads 포더 자동 생성
+  > 백엔드 CORS 허용 설정 추가로 프론트 통신 정상화
+
+- **uploads 폴더 Git 반영 문제**  
+  > `.gitignore`에 `backend/uploads/*.jpg` 추가로 이미지 파일은 무시, `.gitkeep` 파일로 폴더는 유지
+
 ### 🚀 마무리 작업
 - Git 초기화 및 .gitignore 설정
 - 프로젝트 문서 작성 (README, DEV_HISTORY)
 - GitHub 저장소 업로드
-- Notion 연동용 문서 정리
+- Notion 연동용 문서 정리 
+- 이미지 업로드 유형 사용을 위한 frontend & backend 목록 수정 및 매칭 수정 완료
 
