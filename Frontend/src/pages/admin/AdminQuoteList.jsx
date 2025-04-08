@@ -36,7 +36,10 @@ export default function AdminQuoteList() {
               <td className="border p-2">{quote.spaceType}</td>
               <td className="border p-2">{quote.message}</td>
               <td className="border p-2">
-                <button className="text-blue-500 hover:underline mr-2">
+                <button
+                  onClick={() => navigate(`/admin/quotes/${q.id}`)}
+                  className="text-blue-500 hover:underline mr-2"
+                >
                   상세
                 </button>
                 <button className="text-red-500 hover:underline">삭제</button>

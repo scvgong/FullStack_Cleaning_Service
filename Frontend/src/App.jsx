@@ -4,6 +4,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import MainLayout from "./layouts/MainLayout";
 import AdminQuoteList from "./pages/admin/AdminQuoteList";
+import AdminQuoteDetail from "./pages/admin/AdminQuoteDetail";
 
 // 추가된 페이지 컴포넌트
 import MoveInCleaning from "./pages/cleaning/MoveInCleaning";
@@ -36,6 +37,7 @@ function App() {
           <Route path="/contact/quote" element={<QuoteRequest />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/admin/quotes" element={<AdminQuoteList />} />
+          <Route path="/admin/quotes/:id" element={<AdminQuoteDetail />} />
         </Routes>
       </MainLayout>
     </Router>
