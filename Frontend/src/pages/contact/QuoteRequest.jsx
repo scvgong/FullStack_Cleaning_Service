@@ -13,8 +13,7 @@ const QuoteRequest = () => {
     agree: false,
   });
 
-  const [image, setImage] = useState(null);
-
+  const [images, setImages] = useState([]);
   const [errors, setErrors] = useState({});
   const [submitSuccess, setSubmitSuccess] = useState(null);
 
@@ -66,8 +65,8 @@ const QuoteRequest = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+    const files = Array.from(e.target.files);
+    setImages(files);
   };
 
   const handleSubmit = async (e) => {
@@ -97,9 +96,7 @@ const QuoteRequest = () => {
       "data",
       new Blob([JSON.stringify(form)], { type: "application/json" })
     );
-    if (image) {
-      formData.append("image", image);
-    }
+    images.forEach((file) => formData.append("images", file));
 
     try {
       const response = await fetch("http://localhost:8080/api/quotes", {
@@ -122,7 +119,7 @@ const QuoteRequest = () => {
           message: "",
           agree: false,
         });
-        setImage(null);
+        setImages(null);
         setErrors({});
         setSubmitSuccess(true);
       } else {
@@ -192,12 +189,16 @@ const QuoteRequest = () => {
           />
         </div>
         <div>
-          <label className="block font-medium">이미지 업로드</label>
+          <label className="block font-medium">
+            사진 업로드 (다중 선택 가능)
+          </label>
           <input
             type="file"
+            name="images"
+            multiple
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full"
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
