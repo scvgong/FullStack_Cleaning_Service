@@ -6,8 +6,11 @@
 <mapper namespace="com.cleaning.backend.mapper.QuoteImageMapper">
 
     <insert id="insertQuoteImage" parameterType="com.cleaning.backend.model.QuoteImage">
-        INSERT INTO QUOTE_IMAGES (QUOTE_ID, IMAGE_PATH)
-        VALUES (#{quoteId}, #{imagePath})
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT QUOTE_IMAGES_SEQ.NEXTVAL FROM dual
+        </selectKey>
+        INSERT INTO QUOTE_IMAGES (ID, QUOTE_ID, FILE_PATH)
+        VALUES (#{id}, #{quoteId}, #{filePath})
     </insert>
 
     <select id="findImagesByQuoteId" resultType="com.cleaning.backend.model.QuoteImage">

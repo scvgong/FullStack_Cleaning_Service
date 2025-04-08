@@ -29,14 +29,24 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
 
     @PostConstruct
     public void initUploadDir() {
-        File dir = new File(uploadDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
+        // 1. 상대 경로를 프로젝트 기준 절대 경로로 변환
+        String basePath = new File("").getAbsolutePath();
+        File fullPath = new File(basePath, uploadDir);
+
+        // 2. 디렉토리가 없으면 생성
+        if (!fullPath.exists()) {
+            boolean created = fullPath.mkdirs();
+            System.out.println("📂 uploads 폴더 생성됨: " + fullPath.getAbsolutePath() + " (성공 여부: " + created + ")");
+        } else {
+            System.out.println("✅ uploads 폴더 이미 존재: " + fullPath.getAbsolutePath());
         }
+
+        // 3. 이후 모든 업로드는 이 경로로 저장되게 설정
+        uploadDir = fullPath.getAbsolutePath();
     }
 
     @Override
-    public void saveQuote(QuoteRequestDto dto, List<MultipartFile> images) {
+    public void saveQuote(QuoteRequestDto dto, List<MultipartFile> images){
         // 1. 견적 요청 정보 저장
         QuoteRequest entity = new QuoteRequest();
         entity.setServiceType(dto.getServiceType());
@@ -54,18 +64,22 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
         if (images != null && !images.isEmpty()) {
             for (MultipartFile image : images) {
                 if (!image.isEmpty()) {
+                    String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+                    File dest = new File(uploadDir, fileName);
+                    System.out.println("Uploading image: " + image.getOriginalFilename());
                     try {
-                        String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-                        File dest = new File(uploadDir + File.separator + fileName);
                         image.transferTo(dest);
+                        System.out.println("Saved to: " + dest.getAbsolutePath());
 
                         QuoteImage quoteImage = new QuoteImage();
                         quoteImage.setQuoteId(entity.getId());
                         quoteImage.setFilePath(fileName);
+
                         quoteImageMapper.insertQuoteImage(quoteImage);
                     } catch (IOException e) {
                         e.printStackTrace();
                         // 예외 처리는 필요시 별도로 로깅하거나 예외 전파
+                        throw new RuntimeException("이미지 저장 실패 : " + fileName, e);
                     }
                 }
             }
