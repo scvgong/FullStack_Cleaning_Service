@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function AdminQuoteList() {
   const [quotes, setQuotes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -37,7 +39,7 @@ export default function AdminQuoteList() {
               <td className="border p-2">{quote.message}</td>
               <td className="border p-2">
                 <button
-                  onClick={() => navigate(`/admin/quotes/${q.id}`)}
+                  onClick={() => navigate(`/admin/quotes/${quote.id}`)}
                   className="text-blue-500 hover:underline mr-2"
                 >
                   상세
