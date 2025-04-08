@@ -15,6 +15,4 @@ public class QuoteRequest {
     private String email;
     private String location;
     private String message;
-    private String imagePath;
-    private List<String> imagePaths;
 }

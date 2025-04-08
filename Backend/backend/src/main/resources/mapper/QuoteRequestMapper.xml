@@ -10,11 +10,11 @@
         </selectKey>
         INSERT INTO quote_request (
         id, service_type, space_type, area,
-        name, phone, email, location, message, image_path
+        name, phone, email, location, message
         )
         VALUES (
         #{id}, #{serviceType}, #{spaceType}, #{area},
-        #{name}, #{phone}, #{email}, #{location}, #{message}, #{imagePath, jdbcType=VARCHAR}
+        #{name}, #{phone}, #{email}, #{location}, #{message}
         )
     </insert>
 
