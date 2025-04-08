@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import MainLayout from "./layouts/MainLayout";
+import AdminQuoteList from "./pages/admin/AdminQuoteList";
 
 // 추가된 페이지 컴포넌트
 import MoveInCleaning from "./pages/cleaning/MoveInCleaning";
@@ -34,6 +35,7 @@ function App() {
           <Route path="/special-cleaning/wall" element={<WallCleaning />} />
           <Route path="/contact/quote" element={<QuoteRequest />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/admin/quotes" element={<AdminQuoteList />} />
         </Routes>
       </MainLayout>
     </Router>
