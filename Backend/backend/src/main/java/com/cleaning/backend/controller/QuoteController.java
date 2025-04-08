@@ -1,6 +1,7 @@
 package com.cleaning.backend.controller;
 
 import com.cleaning.backend.dto.QuoteRequestDto;
+import com.cleaning.backend.model.QuoteRequest;
 import com.cleaning.backend.service.QuoteRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -25,4 +26,5 @@ public class QuoteController {
         quoteRequestService.saveQuote(dto, images);
         return ResponseEntity.ok("견적 요청이 성공적으로 접수되었습니다.");
     }
+
 }

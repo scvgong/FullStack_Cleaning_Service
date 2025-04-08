@@ -86,4 +86,10 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
         }
     }
 
+    @Override
+    public List<QuoteRequest> getAllQuotes() {
+        return quoteRequestMapper.getAllQuotes();
+    }
+
+
 }
