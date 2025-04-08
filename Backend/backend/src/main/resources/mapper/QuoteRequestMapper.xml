@@ -4,7 +4,7 @@
 
 <mapper namespace="com.cleaning.backend.mapper.QuoteRequestMapper">
 
-    <insert id="insertQuote" parameterType="com.cleaning.backend.model.QuoteRequest">
+    <insert id="insertQuote" parameterType="com.cleaning.backend.model.QuoteRequest" useGeneratedKeys="true">
         <selectKey keyProperty="id" resultType="long" order="BEFORE">
             SELECT QUOTE_REQUEST_SEQ_MY.NEXTVAL FROM dual
         </selectKey>
@@ -14,7 +14,7 @@
         )
         VALUES (
         #{id}, #{serviceType}, #{spaceType}, #{area},
-        #{name}, #{phone}, #{email}, #{location}, #{message}, #{imagePath}
+        #{name}, #{phone}, #{email}, #{location}, #{message}, #{imagePath, jdbcType=VARCHAR}
         )
     </insert>
 
