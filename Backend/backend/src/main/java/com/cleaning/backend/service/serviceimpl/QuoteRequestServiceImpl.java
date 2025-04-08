@@ -91,5 +91,8 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
         return quoteRequestMapper.getAllQuotes();
     }
 
+    public QuoteRequest getQuoteDetail(Long id) {
+        return quoteRequestMapper.findQuoteWithImagesById(id);
+    }
 
 }

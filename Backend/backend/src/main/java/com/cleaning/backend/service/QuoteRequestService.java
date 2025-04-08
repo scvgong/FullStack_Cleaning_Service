@@ -8,4 +8,6 @@ import java.util.List;
 public interface QuoteRequestService {
     void saveQuote(QuoteRequestDto dto, List<MultipartFile> images);
     List<QuoteRequest> getAllQuotes();
+
+    QuoteRequest getQuoteDetail(Long id);
 }

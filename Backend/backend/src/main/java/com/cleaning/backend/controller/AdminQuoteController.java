@@ -18,4 +18,9 @@ public class AdminQuoteController {
     public List<QuoteRequest> getAllQuotes() {
         return quoteRequestService.getAllQuotes();
     }
+
+    @GetMapping("/{id}")
+    public QuoteRequest getQuoteDetail(@PathVariable Long id) {
+        return quoteRequestService.getQuoteDetail(id);
+    }
 }

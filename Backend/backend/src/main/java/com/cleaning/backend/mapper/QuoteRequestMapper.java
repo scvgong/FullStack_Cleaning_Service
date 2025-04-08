@@ -7,7 +7,7 @@ import java.util.List;
 @Mapper
 public interface QuoteRequestMapper {
     void insertQuote(QuoteRequest request);
-    QuoteRequest findById(Long id);
+    QuoteRequest findQuoteWithImagesById(Long id);
     List<QuoteRequest> getAllQuotes();
 
 }

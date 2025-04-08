@@ -32,5 +32,39 @@
         SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
     </select>
 
+    <select id="findQuoteWithImagesById" parameterType="long" resultMap="quoteWithImagesMap">
+        SELECT
+        qr.ID as qr_id,
+        qr.SERVICE_TYPE,
+        qr.SPACE_TYPE,
+        qr.AREA,
+        qr.NAME,
+        qr.PHONE,
+        qr.EMAIL,
+        qr.LOCATION,
+        qr.MESSAGE,
+        qi.ID as qi_id,
+        qi.FILE_PATH
+        FROM QUOTE_REQUEST qr
+        LEFT JOIN QUOTE_IMAGES qi ON qr.ID = qi.QUOTE_ID
+        WHERE qr.ID = #{id}
+    </select>
+
+    <resultMap id="quoteWithImagesMap" type="com.cleaning.backend.model.QuoteRequest">
+        <id property="id" column="qr_id" />
+        <result property="serviceType" column="SERVICE_TYPE" />
+        <result property="spaceType" column="SPACE_TYPE" />
+        <result property="area" column="AREA" />
+        <result property="name" column="NAME" />
+        <result property="phone" column="PHONE" />
+        <result property="email" column="EMAIL" />
+        <result property="location" column="LOCATION" />
+        <result property="message" column="MESSAGE" />
+        <collection property="images" ofType="com.cleaning.backend.model.QuoteImage">
+            <id property="id" column="qi_id" />
+            <result property="filePath" column="FILE_PATH" />
+        </collection>
+    </resultMap>
+
 </mapper>
 
