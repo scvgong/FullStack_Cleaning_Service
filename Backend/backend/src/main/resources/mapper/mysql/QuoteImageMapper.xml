@@ -6,12 +6,12 @@
 <mapper namespace="com.cleaning.backend.mapper.QuoteImageMapper">
 
     <insert id="insertQuoteImage" parameterType="com.cleaning.backend.model.QuoteImage" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO QUOTE_IMAGES (QUOTE_ID, image_path)
+        INSERT INTO QUOTE_IMAGES (QUOTE_ID, file_path)
         VALUES (#{quoteId}, #{filePath})
     </insert>
 
     <select id="findImagesByQuoteId" resultType="com.cleaning.backend.model.QuoteImage">
-        SELECT ID, QUOTE_ID, image_path AS filePath
+        SELECT ID, QUOTE_ID, file_path
         FROM QUOTE_IMAGES
         WHERE QUOTE_ID = #{quoteId}
     </select>

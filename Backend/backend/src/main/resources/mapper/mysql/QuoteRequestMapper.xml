@@ -42,7 +42,7 @@
         qi.id AS qi_id,
         qi.file_path
         FROM quote_request qr
-        LEFT JOIN quote_image qi ON qr.id = qi.quote_request_id
+        LEFT JOIN quote_images qi ON qr.id = qi.quote_id
         WHERE qr.id = #{id}
     </select>
 
