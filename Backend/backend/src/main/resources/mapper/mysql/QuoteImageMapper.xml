@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cleaning.backend.mapper.QuoteImageMapper">
+
+    <insert id="insertQuoteImage" parameterType="com.cleaning.backend.model.QuoteImage" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO QUOTE_IMAGES (QUOTE_ID, image_path)
+        VALUES (#{quoteId}, #{filePath})
+    </insert>
+
+    <select id="findImagesByQuoteId" resultType="com.cleaning.backend.model.QuoteImage">
+        SELECT ID, QUOTE_ID, image_path AS filePath
+        FROM QUOTE_IMAGES
+        WHERE QUOTE_ID = #{quoteId}
+    </select>
+
+    <delete id="deleteImagesByQuoteId" parameterType="long">
+        DELETE FROM QUOTE_IMAGES WHERE QUOTE_ID = #{quoteId}
+    </delete>
+
+</mapper>
