@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: backend
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  multipart:
+    max-file-size: 20MB
+    max-request-size: 50MB
+  http:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+  profiles:
+    active: mysql # <-- oracle 또는 mysql 로 설정
+  mvc:
+    hiddenmethod:
+          filter:
+            enabled: true
+
+server:
+  port: 8080
+
+file:
+  upload-dir: uploads/
+
+logging:
+  level:
+    org.springframework.web.multipart: DEBUG

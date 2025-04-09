@@ -91,7 +91,7 @@
         FROM (
         SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
         ) inner_query
-        WHERE ROWNUM <= #{offset} + #{pageSize}
+        WHERE <![CDATA[ ROWNUM <= #{offset} + #{pageSize} ]]>
         )
         WHERE rn > #{offset}
     </select>
@@ -100,4 +100,3 @@
         SELECT COUNT(*) FROM QUOTE_REQUEST
     </select>
 </mapper>
-

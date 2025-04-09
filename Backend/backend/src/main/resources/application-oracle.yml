@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: oracle
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:ORCL
+    username: CLEAN_SERVICE
+    password: clean
+    driver-class-name: oracle.jdbc.OracleDriver
+
+mybatis:
+  mapper-locations: classpath:mapper/oracle/*.xml
+  type-aliases-package: com.cleaning.backend.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
