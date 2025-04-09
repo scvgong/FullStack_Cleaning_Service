@@ -13,6 +13,20 @@ export default function AdminQuoteList() {
       .catch((err) => console.error("견적 목록 조회 실패:", err));
   }, []);
 
+  const handleDelete = async (id) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        await axios.delete(`http://localhost:8080/api/admin/quotes/${id}`);
+        alert("삭제되었습니다.");
+        // 목록 다시 불러오기
+        setQuotes((prev) => prev.filter((quote) => quote.id !== id));
+      } catch (err) {
+        console.error(err);
+        alert("삭제 중 오류 발생");
+      }
+    }
+  };
+
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">견적 요청 목록</h2>
@@ -44,7 +58,12 @@ export default function AdminQuoteList() {
                 >
                   상세
                 </button>
-                <button className="text-red-500 hover:underline">삭제</button>
+                <button
+                  onClick={() => handleDelete(quote.id)}
+                  className="text-red-500 hover:underline"
+                >
+                  삭제
+                </button>
               </td>
             </tr>
           ))}
