@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class QuoteRequestDto {
+    private Long id;
     private String serviceType;  // 청소 서비스 유형 (예: 이사청소, 사무실청소 등)
     private String spaceType;    // 공간 유형 (예: 아파트, 상가 등)
     private String area;         // 면적 (예: 30평 등)

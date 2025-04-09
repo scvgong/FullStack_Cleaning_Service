@@ -70,6 +70,20 @@
         DELETE FROM QUOTE_REQUEST WHERE ID = #{id}
     </delete>
 
+    <update id="updateQuote" parameterType="com.cleaning.backend.model.QuoteRequest">
+        UPDATE QUOTE_REQUEST
+        SET
+        SERVICE_TYPE = #{serviceType},
+        SPACE_TYPE = #{spaceType},
+        AREA = #{area},
+        NAME = #{name},
+        PHONE = #{phone},
+        EMAIL = #{email},
+        LOCATION = #{location},
+        MESSAGE = #{message}
+        WHERE ID = #{id}
+    </update>
+
 
 </mapper>
 

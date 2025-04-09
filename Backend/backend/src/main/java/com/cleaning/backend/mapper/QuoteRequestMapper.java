@@ -1,5 +1,6 @@
 package com.cleaning.backend.mapper;
 
+import com.cleaning.backend.dto.QuoteRequestDto;
 import com.cleaning.backend.model.QuoteRequest;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
@@ -10,5 +11,5 @@ public interface QuoteRequestMapper {
     QuoteRequest findQuoteWithImagesById(Long id);
     List<QuoteRequest> getAllQuotes();
     void deleteQuoteById(Long id);
-
+    void updateQuote(QuoteRequest quoteRequest);
 }

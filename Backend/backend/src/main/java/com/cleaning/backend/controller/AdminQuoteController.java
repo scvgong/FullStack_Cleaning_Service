@@ -1,5 +1,6 @@
 package com.cleaning.backend.controller;
 
+import com.cleaning.backend.dto.QuoteRequestDto;
 import com.cleaning.backend.model.QuoteRequest;
 import com.cleaning.backend.service.QuoteRequestService;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,13 @@ public class AdminQuoteController {
     public ResponseEntity<Void> deleteQuote(@PathVariable Long id) {
         quoteRequestService.deleteQuote(id);
         return ResponseEntity.noContent().build(); // 204 응답
+    }
+
+    //수정
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateQuote(@PathVariable Long id, @RequestBody QuoteRequestDto dto) {
+        dto.setId(id); // 경로에서 받은 id를 dto에 설정
+        quoteRequestService.updateQuote(dto);
+        return ResponseEntity.ok("견적 정보가 수정되었습니다.");
     }
 }
