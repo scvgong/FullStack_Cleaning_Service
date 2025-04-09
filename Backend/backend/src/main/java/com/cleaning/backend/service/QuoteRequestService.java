@@ -11,5 +11,6 @@ public interface QuoteRequestService {
 
     QuoteRequest getQuoteDetail(Long id);
     void deleteQuote(Long id);
-    void updateQuote(QuoteRequestDto dto);
+    void updateQuote(Long id, QuoteRequestDto dto);
+    void updateStatus(Long id, String status);
 }

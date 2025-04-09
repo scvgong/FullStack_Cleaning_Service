@@ -60,7 +60,9 @@
         <result property="email" column="EMAIL" />
         <result property="location" column="LOCATION" />
         <result property="message" column="MESSAGE" />
-        <collection property="images" ofType="com.cleaning.backend.model.QuoteImage">
+        <collection property="images"
+                    ofType="com.cleaning.backend.model.QuoteImage"
+                    javaType="java.util.List">
             <id property="id" column="qi_id" />
             <result property="filePath" column="FILE_PATH" />
         </collection>
@@ -73,14 +75,8 @@
     <update id="updateQuote" parameterType="com.cleaning.backend.model.QuoteRequest">
         UPDATE QUOTE_REQUEST
         SET
-        SERVICE_TYPE = #{serviceType},
-        SPACE_TYPE = #{spaceType},
-        AREA = #{area},
-        NAME = #{name},
-        PHONE = #{phone},
-        EMAIL = #{email},
-        LOCATION = #{location},
-        MESSAGE = #{message}
+        ADMIN_REPLY = #{adminReply},
+        STATUS = #{status}
         WHERE ID = #{id}
     </update>
 

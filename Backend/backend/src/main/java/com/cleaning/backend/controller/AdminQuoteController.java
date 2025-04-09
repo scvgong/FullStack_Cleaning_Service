@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin/quotes")
@@ -36,9 +37,17 @@ public class AdminQuoteController {
 
     //수정
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateQuote(@PathVariable Long id, @RequestBody QuoteRequestDto dto) {
-        dto.setId(id); // 경로에서 받은 id를 dto에 설정
-        quoteRequestService.updateQuote(dto);
-        return ResponseEntity.ok("견적 정보가 수정되었습니다.");
+    public void updateQuote(@PathVariable Long id, @RequestBody QuoteRequestDto dto) {
+        quoteRequestService.updateQuote(id, dto);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<String> updateStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> payload
+    ) {
+        String status = payload.get("status");
+        quoteRequestService.updateStatus(id, status);
+        return ResponseEntity.ok("견적 요청 상태가 업데이트되었습니다.");
     }
 }

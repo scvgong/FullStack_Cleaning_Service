@@ -104,18 +104,21 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
     }
 
     @Override
-    public void updateQuote(QuoteRequestDto dto) {
+    public void updateQuote(Long id, QuoteRequestDto dto) {
         QuoteRequest entity = new QuoteRequest();
-        entity.setId(dto.getId());
-        entity.setServiceType(dto.getServiceType());
-        entity.setSpaceType(dto.getSpaceType());
-        entity.setArea(dto.getArea());
-        entity.setName(dto.getName());
-        entity.setPhone(dto.getPhone());
-        entity.setEmail(dto.getEmail());
-        entity.setLocation(dto.getLocation());
-        entity.setMessage(dto.getMessage());
+        entity.setId(id);
+        entity.setAdminReply(dto.getAdminReply());
+        entity.setStatus(dto.getStatus());
 
         quoteRequestMapper.updateQuote(entity);
     }
+
+    @Override
+    public void updateStatus(Long id, String status) {
+        QuoteRequest quoteRequest = new QuoteRequest();
+        quoteRequest.setId(id); // 반드시 설정해야 WHERE 절 조건이 생김!
+        quoteRequest.setStatus(status);
+        quoteRequestMapper.updateQuote(quoteRequest);
+    }
+
 }

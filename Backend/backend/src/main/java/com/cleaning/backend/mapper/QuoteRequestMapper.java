@@ -3,6 +3,8 @@ package com.cleaning.backend.mapper;
 import com.cleaning.backend.dto.QuoteRequestDto;
 import com.cleaning.backend.model.QuoteRequest;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 @Mapper
@@ -12,4 +14,5 @@ public interface QuoteRequestMapper {
     List<QuoteRequest> getAllQuotes();
     void deleteQuoteById(Long id);
     void updateQuote(QuoteRequest quoteRequest);
+
 }

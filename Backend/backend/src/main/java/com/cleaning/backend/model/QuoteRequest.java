@@ -16,4 +16,8 @@ public class QuoteRequest {
     private String location;
     private String message;
     private List<QuoteImage> images;
+
+    private String adminReply;
+    private String status;
+
 }

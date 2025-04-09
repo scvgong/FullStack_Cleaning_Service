@@ -13,4 +13,8 @@ public class QuoteRequestDto {
     private String email;        // 이메일 주소
     private String location;     // 청소 위치
     private String message;      // 추가 요청 사항 또는 메시지
+
+    private String adminReply;
+    private String status;
+
 }
