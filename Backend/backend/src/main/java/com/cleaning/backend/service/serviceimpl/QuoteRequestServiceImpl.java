@@ -8,6 +8,7 @@ import com.cleaning.backend.model.QuoteRequest;
 import com.cleaning.backend.service.QuoteRequestService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,8 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
         if (!fullPath.exists()) {
             boolean created = fullPath.mkdirs();
             System.out.println("📂 uploads 폴더 생성됨: " + fullPath.getAbsolutePath() + " (성공 여부: " + created + ")");
+            Logger log = null;
+            log.info("Upload directory created: {}", fullPath.getAbsolutePath());
         } else {
             System.out.println("✅ uploads 폴더 이미 존재: " + fullPath.getAbsolutePath());
         }
