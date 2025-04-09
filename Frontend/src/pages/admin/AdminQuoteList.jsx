@@ -6,12 +6,24 @@ export default function AdminQuoteList() {
   const [quotes, setQuotes] = useState([]);
   const navigate = useNavigate();
 
+  //페이징 처리
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const pageSize = 10; // 페이지당 항목 수
+
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/admin/quotes")
-      .then((res) => setQuotes(res.data))
-      .catch((err) => console.error("견적 목록 조회 실패:", err));
-  }, []);
+      .get(
+        `http://localhost:8080/api/admin/quotes?page=${page}&size=${pageSize}`
+      )
+      .then((res) => {
+        setQuotes(res.data.data);
+        setTotal(res.data.total);
+      })
+      .catch((err) => console.error("목록 조회 실패:", err));
+  }, [page]);
+
+  const totalPages = Math.ceil(total / pageSize); // 총 페이지 수
 
   const handleDelete = async (id) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -69,6 +81,20 @@ export default function AdminQuoteList() {
           ))}
         </tbody>
       </table>
+
+      <div className="mt-4 flex justify-center space-x-2">
+        {Array.from({ length: totalPages }, (_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setPage(idx)}
+            className={`px-3 py-1 rounded ${
+              page === idx ? "bg-blue-600 text-white" : "bg-gray-200"
+            }`}
+          >
+            {idx + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
