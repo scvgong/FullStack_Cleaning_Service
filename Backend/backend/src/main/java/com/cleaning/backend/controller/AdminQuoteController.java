@@ -28,16 +28,10 @@ public class AdminQuoteController {
     //목록 페이징
     @GetMapping
     public ResponseEntity<Map<String, Object>> getQuotesPaged(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-
-        List<QuoteRequest> quotes = quoteRequestService.getQuotesWithPagination(page, size);
-        int total = quoteRequestService.getTotalQuoteCount();
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("quotes", quotes);
-        result.put("total", total);
-
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Map<String, Object> result = quoteRequestService.getQuotesWithPagination(page, size);
         return ResponseEntity.ok(result);
     }
 

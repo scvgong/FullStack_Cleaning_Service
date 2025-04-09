@@ -16,7 +16,7 @@ public interface QuoteRequestMapper {
     void updateQuote(QuoteRequest quoteRequest);
     
     //페이징
-    List<QuoteRequest> getQuotesWithPagination(@Param("offset") int offset, @Param("limit") int limit);
+    List<QuoteRequest> getQuotesWithPagination(@Param("offset") int offset, @Param("pageSize") int pageSize);
     int getTotalQuoteCount();// 전체 데이터 개수 조회
 
 }

@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -122,9 +124,19 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
     }
 
     @Override
-    public List<QuoteRequest> getQuotesWithPagination(int page, int size) {
-        int offset = page * size;
-        return quoteRequestMapper.getQuotesWithPagination(offset, size);
+    public Map<String,Object> getQuotesWithPagination(int page, int size) {
+        int offset = (page - 1) * size;
+        List<QuoteRequest> quotes = quoteRequestMapper.getQuotesWithPagination(offset, size);
+        int total = quoteRequestMapper.getTotalQuoteCount();
+        int totalPages = (int) Math.ceil((double) total / size);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("content", quotes);
+        result.put("page", page);
+        result.put("size", size);
+        result.put("totalElements", total);
+        result.put("totalPages", totalPages);
+        return result;
     }
 
     @Override
