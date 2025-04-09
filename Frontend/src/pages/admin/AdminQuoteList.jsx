@@ -17,8 +17,8 @@ export default function AdminQuoteList() {
         `http://localhost:8080/api/admin/quotes?page=${page}&size=${pageSize}`
       )
       .then((res) => {
-        setQuotes(res.data.data);
-        setTotal(res.data.total);
+        setQuotes(res.data.content);
+        setTotal(res.data.totalElements);
       })
       .catch((err) => console.error("목록 조회 실패:", err));
   }, [page]);
@@ -86,7 +86,7 @@ export default function AdminQuoteList() {
         {Array.from({ length: totalPages }, (_, idx) => (
           <button
             key={idx}
-            onClick={() => setPage(idx)}
+            onClick={() => setPage(idx+1)}
             className={`px-3 py-1 rounded ${
               page === idx ? "bg-blue-600 text-white" : "bg-gray-200"
             }`}
