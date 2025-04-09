@@ -10,4 +10,6 @@ public interface QuoteRequestService {
     List<QuoteRequest> getAllQuotes();
 
     QuoteRequest getQuoteDetail(Long id);
+    void deleteQuote(Long id);
+
 }

@@ -19,4 +19,9 @@
         WHERE QUOTE_ID = #{quoteId}
     </select>
 
+    <delete id="deleteImagesByQuoteId" parameterType="long">
+        DELETE FROM QUOTE_IMAGES WHERE QUOTE_ID = #{quoteId}
+    </delete>
+
+
 </mapper>

@@ -9,5 +9,6 @@ public interface QuoteRequestMapper {
     void insertQuote(QuoteRequest request);
     QuoteRequest findQuoteWithImagesById(Long id);
     List<QuoteRequest> getAllQuotes();
+    void deleteQuoteById(Long id);
 
 }

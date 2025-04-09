@@ -7,4 +7,6 @@ import java.util.List;
 @Mapper
 public interface QuoteImageMapper {
     void insertQuoteImage(QuoteImage quoteImage);
+    void deleteImagesByQuoteId(Long quoteId);
+
 }

@@ -66,5 +66,10 @@
         </collection>
     </resultMap>
 
+    <delete id="deleteQuoteById" parameterType="long">
+        DELETE FROM QUOTE_REQUEST WHERE ID = #{id}
+    </delete>
+
+
 </mapper>
 

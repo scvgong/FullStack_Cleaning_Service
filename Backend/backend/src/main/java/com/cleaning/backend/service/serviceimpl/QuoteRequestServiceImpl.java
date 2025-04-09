@@ -10,6 +10,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -95,4 +96,10 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
         return quoteRequestMapper.findQuoteWithImagesById(id);
     }
 
+    @Override
+    @Transactional
+    public void deleteQuote(Long id) {
+        quoteImageMapper.deleteImagesByQuoteId(id);
+        quoteRequestMapper.deleteQuoteById(id);
+    }
 }
