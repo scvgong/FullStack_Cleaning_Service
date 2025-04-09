@@ -14,5 +14,9 @@ public interface QuoteRequestMapper {
     List<QuoteRequest> getAllQuotes();
     void deleteQuoteById(Long id);
     void updateQuote(QuoteRequest quoteRequest);
+    
+    //페이징
+    List<QuoteRequest> getQuotesWithPagination(@Param("offset") int offset, @Param("limit") int limit);
+    int getTotalQuoteCount();// 전체 데이터 개수 조회
 
 }

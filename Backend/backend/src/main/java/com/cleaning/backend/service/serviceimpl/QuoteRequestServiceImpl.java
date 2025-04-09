@@ -121,4 +121,16 @@ public class QuoteRequestServiceImpl implements QuoteRequestService {
         quoteRequestMapper.updateQuote(quoteRequest);
     }
 
+    @Override
+    public List<QuoteRequest> getQuotesWithPagination(int page, int size) {
+        int offset = page * size;
+        return quoteRequestMapper.getQuotesWithPagination(offset, size);
+    }
+
+    @Override
+    public int getTotalQuoteCount() {
+        return quoteRequestMapper.getTotalQuoteCount();
+    }
+
+
 }

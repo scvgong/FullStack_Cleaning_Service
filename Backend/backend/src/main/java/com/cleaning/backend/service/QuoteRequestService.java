@@ -13,4 +13,7 @@ public interface QuoteRequestService {
     void deleteQuote(Long id);
     void updateQuote(Long id, QuoteRequestDto dto);
     void updateStatus(Long id, String status);
+
+    List<QuoteRequest> getQuotesWithPagination(int page, int size);
+    int getTotalQuoteCount();
 }

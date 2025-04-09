@@ -80,6 +80,24 @@
         WHERE ID = #{id}
     </update>
 
+    <select id="getQuotesPaged" resultType="com.cleaning.backend.model.QuoteRequest">
+        SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
 
+    <select id="getQuotesWithPagination" resultType="com.cleaning.backend.model.QuoteRequest">
+        SELECT * FROM (
+        SELECT ROWNUM AS rn, inner_query.*
+        FROM (
+        SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
+        ) inner_query
+        WHERE ROWNUM <= #{offset} + #{pageSize}
+        )
+        WHERE rn > #{offset}
+    </select>
+
+    <select id="getTotalQuoteCount" resultType="int">
+        SELECT COUNT(*) FROM QUOTE_REQUEST
+    </select>
 </mapper>
 
