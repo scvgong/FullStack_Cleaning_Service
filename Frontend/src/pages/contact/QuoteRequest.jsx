@@ -138,19 +138,23 @@ const QuoteRequest = () => {
   };
 
   return (
-    <section className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">견적 문의</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <form className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md space-y-6">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+        📝 견적 문의
+      </h2>
+
+      <div className="grid sm:grid-cols-2 gap-4">
+        {/* 서비스 유형 */}
         <div>
-          <label className="block font-medium">
-            서비스 유형<span className="text-red-500">*</span>
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            서비스 유형 <span className="text-red-500">*</span>
           </label>
           <select
             name="serviceType"
             ref={refs.serviceType}
             value={form.serviceType}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           >
             <option value="">선택하세요</option>
             <option value="입주청소">입주청소</option>
@@ -163,16 +167,18 @@ const QuoteRequest = () => {
             <p className="text-red-500 text-sm mt-1">{errors.serviceType}</p>
           )}
         </div>
+
+        {/* 공간 유형 */}
         <div>
-          <label className="block font-medium">
-            공간 유형<span className="text-red-500">*</span>
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            공간 유형 <span className="text-red-500">*</span>
           </label>
           <select
             name="spaceType"
             ref={refs.spaceType}
             value={form.spaceType}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           >
             <option value="">선택하세요</option>
             <option value="주거공간">주거공간</option>
@@ -183,20 +189,26 @@ const QuoteRequest = () => {
             <p className="text-red-500 text-sm mt-1">{errors.spaceType}</p>
           )}
         </div>
+
+        {/* 면적 */}
         <div>
-          <label className="block font-medium">면적 (㎡)</label>
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            면적 (㎡)
+          </label>
           <input
             type="text"
             name="area"
             ref={refs.area}
             value={form.area}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
         </div>
+
+        {/* 사진 업로드 */}
         <div>
-          <label className="block font-medium">
-            사진 업로드 (다중 선택 가능)
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            사진 업로드
           </label>
           <input
             type="file"
@@ -204,12 +216,14 @@ const QuoteRequest = () => {
             multiple
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
         </div>
+
+        {/* 이름 */}
         <div>
-          <label className="block font-medium">
-            상호명 / 성함<span className="text-red-500">*</span>
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            상호명 / 성함 <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -217,15 +231,17 @@ const QuoteRequest = () => {
             ref={refs.name}
             value={form.name}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           {errors.name && (
             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
           )}
         </div>
+
+        {/* 연락처 */}
         <div>
-          <label className="block font-medium">
-            연락처<span className="text-red-500">*</span>
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            연락처 <span className="text-red-500">*</span>
           </label>
           <input
             type="tel"
@@ -233,15 +249,17 @@ const QuoteRequest = () => {
             ref={refs.phone}
             value={form.phone}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           {errors.phone && (
             <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
           )}
         </div>
+
+        {/* 이메일 */}
         <div>
-          <label className="block font-medium">
-            이메일<span className="text-red-500">*</span>
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            이메일 <span className="text-red-500">*</span>
           </label>
           <input
             type="email"
@@ -249,108 +267,153 @@ const QuoteRequest = () => {
             ref={refs.email}
             value={form.email}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
           )}
         </div>
+
+        {/* 지역 */}
         <div>
-          <label className="block font-medium">지역</label>
+          <label className="block font-medium text-gray-700 dark:text-gray-200">
+            지역
+          </label>
           <input
             type="text"
             name="location"
             value={form.location}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
         </div>
-        <div>
-          <label className="block font-medium">문의 내용</label>
-          <textarea
-            name="message"
-            value={form.message}
-            onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
-            rows={4}
-          />
-        </div>
-        <div className="flex items-start">
-          <input
-            id="agree"
-            type="checkbox"
-            name="agree"
-            checked={form.agree}
-            onChange={handleChange}
-            className="mr-2 mt-1"
-          />
-          <label htmlFor="agree" className="cursor-pointer">
-            개인정보 수집 및 이용에 동의합니다.
-            <span className="text-red-500"> *</span>
-          </label>
-        </div>
+      </div>
+
+      {/* 문의 내용 */}
+      <div>
+        <label className="block font-medium text-gray-700 dark:text-gray-200">
+          문의 내용
+        </label>
+        <textarea
+          name="message"
+          value={form.message}
+          onChange={handleChange}
+          rows={4}
+          className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+        />
+      </div>
+
+      {/* 동의 */}
+      <div className="flex items-start space-x-2">
+        <input
+          id="agree"
+          type="checkbox"
+          name="agree"
+          checked={form.agree}
+          onChange={handleChange}
+          className="mt-1"
+        />
+        <label htmlFor="agree" className="text-gray-700 dark:text-gray-200">
+          개인정보 수집 및 이용에 동의합니다.{" "}
+          <span className="text-red-500">*</span>
+        </label>
+      </div>
+
+      {/* 버튼 */}
+      <div className="flex flex-wrap gap-4 justify-end pt-4">
         <button
           type="button"
           onClick={() => setShowPreview(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
+          className="px-5 py-2 rounded bg-gray-500 hover:bg-gray-600 text-white"
         >
           미리보기
-        </button>
+        </button>{" "}
         {showPreview && (
-          <div className="border p-4 mt-6 bg-gray-100 rounded shadow">
-            <h3 className="text-xl font-bold mb-3">미리보기</h3>
-            <p>
-              <strong>이름:</strong> {form.name}
-            </p>
-            <p>
-              <strong>연락처:</strong> {form.phone}
-            </p>
-            <p>
-              <strong>이메일:</strong> {form.email}
-            </p>
-            <p>
-              <strong>위치:</strong> {form.location}
-            </p>
-            <p>
-              <strong>서비스 유형:</strong> {form.serviceType}
-            </p>
-            <p>
-              <strong>공간 유형:</strong> {form.spaceType}
-            </p>
-            <p>
-              <strong>면적:</strong> {form.area}
-            </p>
-            <p>
-              <strong>메시지:</strong> {form.message}
-            </p>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              {images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={URL.createObjectURL(img)}
-                  alt={`preview-${idx}`}
-                  className="w-40 h-auto rounded border shadow"
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() => setShowPreview(false)}
-              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded"
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60"
+            onClick={() => setShowPreview(false)}
+          >
+            <div
+              className="relative w-full max-w-2xl mx-4 md:mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
+              onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 시 닫히지 않도록
             >
-              닫기
-            </button>
+              <h3 className="text-2xl font-semibold mb-5 text-gray-900 dark:text-gray-100">
+                📋 미리보기
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-gray-700 dark:text-gray-300 text-sm">
+                <div>
+                  <span className="font-medium">이름 :</span> {form.name}
+                </div>
+                <div>
+                  <span className="font-medium">연락처 :</span> {form.phone}
+                </div>
+                <div>
+                  <span className="font-medium">이메일 :</span> {form.email}
+                </div>
+                <div>
+                  <span className="font-medium">위치 :</span> {form.location}
+                </div>
+                <div>
+                  <span className="font-medium">서비스 유형 :</span>{" "}
+                  {form.serviceType}
+                </div>
+                <div>
+                  <span className="font-medium">공간 유형 :</span>{" "}
+                  {form.spaceType}
+                </div>
+                <div>
+                  <span className="font-medium">면적 :</span> {form.area}
+                </div>
+                <div className="col-span-2">
+                  <span className="font-medium">메시지 :</span>
+                  <div className="whitespace-pre-wrap mt-1 px-3 py-2 border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-700">
+                    {form.message || "없음"}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <p className="font-medium text-gray-800 dark:text-gray-200 mb-2">
+                  첨부 이미지:
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  {images.length > 0 ? (
+                    images.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={URL.createObjectURL(img)}
+                        alt={`preview-${idx}`}
+                        className="w-32 h-auto rounded border shadow-md"
+                      />
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-sm">
+                      첨부된 이미지가 없습니다.
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-6 text-right">
+                <button
+                  onClick={() => setShowPreview(false)}
+                  className="inline-block px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition"
+                >
+                  닫기
+                </button>
+              </div>
+            </div>
           </div>
         )}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+          className="px-6 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
         >
           제출하기
         </button>
-      </form>
-    </section>
+      </div>
+    </form>
   );
 };
 
