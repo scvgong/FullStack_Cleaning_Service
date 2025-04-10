@@ -15,7 +15,7 @@ spring:
       force: true
       charset: UTF-8
   profiles:
-    active: mysql # <-- oracle 또는 mysql 로 설정
+    active: ${ACTIVE_PROFILE:oracle}  # 기본값은 oracle
   mvc:
     hiddenmethod:
           filter:
