@@ -120,17 +120,24 @@ export default function AdminQuoteDetail() {
       )}
 
       <h3>첨부 이미지</h3>
-      {quote.images && quote.images.length > 0 ? (
-        quote.images.map((img, index) => (
-          <img
-            key={index}
-            src={`http://localhost:8080/uploads/${img.filePath}`}
-            alt={`견적 이미지 ${index + 1}`}
-            style={{ width: "300px", margin: "10px" }}
-          />
-        ))
-      ) : (
-        <p>첨부된 이미지가 없습니다.</p>
+      {quote.images && quote.images.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", marginTop: "20px" }}>
+          {quote.images.map((img, index) => (
+            <img
+              key={index}
+              src={encodeURI(`/uploads/${img.filePath}`)}
+              alt={`견적 이미지 ${index + 1}`}
+              style={{
+                width: "200px",
+                height: "auto",
+                marginRight: "10px",
+                marginBottom: "10px",
+                borderRadius: "5px",
+                boxShadow: "0 0 5px rgba(0,0,0,0.1)",
+              }}
+            />
+          ))}
+        </div>
       )}
 
       <div className="mt-6 space-x-2">
