@@ -16,6 +16,7 @@ const QuoteRequest = () => {
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState({});
   const [submitSuccess, setSubmitSuccess] = useState(null);
+  const [showPreview, setShowPreview] = useState(false);
 
   const refs = {
     serviceType: useRef(),
@@ -62,6 +63,11 @@ const QuoteRequest = () => {
     if (errors[name] && updatedForm[name]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
@@ -283,6 +289,60 @@ const QuoteRequest = () => {
             <span className="text-red-500"> *</span>
           </label>
         </div>
+        <button
+          type="button"
+          onClick={() => setShowPreview(true)}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          미리보기
+        </button>
+        {showPreview && (
+          <div className="border p-4 mt-6 bg-gray-100 rounded shadow">
+            <h3 className="text-xl font-bold mb-3">미리보기</h3>
+            <p>
+              <strong>이름:</strong> {form.name}
+            </p>
+            <p>
+              <strong>연락처:</strong> {form.phone}
+            </p>
+            <p>
+              <strong>이메일:</strong> {form.email}
+            </p>
+            <p>
+              <strong>위치:</strong> {form.location}
+            </p>
+            <p>
+              <strong>서비스 유형:</strong> {form.serviceType}
+            </p>
+            <p>
+              <strong>공간 유형:</strong> {form.spaceType}
+            </p>
+            <p>
+              <strong>면적:</strong> {form.area}
+            </p>
+            <p>
+              <strong>메시지:</strong> {form.message}
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={URL.createObjectURL(img)}
+                  alt={`preview-${idx}`}
+                  className="w-40 h-auto rounded border shadow"
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() => setShowPreview(false)}
+              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded"
+            >
+              닫기
+            </button>
+          </div>
+        )}
         <button
           type="submit"
           className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
