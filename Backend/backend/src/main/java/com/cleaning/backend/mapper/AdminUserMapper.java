@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AdminUserMapper {
     AdminUser findByUsername(@Param("username") String name);
+    void insertAdminUser(AdminUser user);
 }

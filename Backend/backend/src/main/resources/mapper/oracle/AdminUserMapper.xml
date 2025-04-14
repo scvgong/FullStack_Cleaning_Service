@@ -8,4 +8,9 @@
         FROM ADMIN_USER
         WHERE USERNAME = #{username}
     </select>
+
+    <insert id="insertAdminUser">
+        INSERT INTO ADMIN_USER (ID, USERNAME, PASSWORD, NAME, ROLE, CREATED_AT)
+        VALUES (ADMIN_USER_SEQ.NEXTVAL, #{username}, #{password}, #{name}, #{role}, SYSDATE)
+    </insert>
 </mapper>

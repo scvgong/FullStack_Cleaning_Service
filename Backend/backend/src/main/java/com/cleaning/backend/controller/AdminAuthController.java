@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AdminAuthController {
     private final AdminAuthService authService;
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AdminLoginRequestDto loginDto) {
