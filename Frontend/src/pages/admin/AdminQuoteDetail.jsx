@@ -11,7 +11,11 @@ export default function AdminQuoteDetail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/admin/quotes/${id}`)
+      .get(`http://localhost:8080/api/admin/quotes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        },
+      })
       .then((res) => {
         setQuote(res.data);
         setForm({
@@ -32,7 +36,11 @@ export default function AdminQuoteDetail() {
   const handleDelete = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/admin/quotes/${id}`);
+        await axios.delete(`http://localhost:8080/api/admin/quotes/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        });
         alert("삭제되었습니다.");
         navigate("/admin/quotes");
       } catch (error) {
@@ -45,7 +53,11 @@ export default function AdminQuoteDetail() {
   // 수정 이벤트
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:8080/api/admin/quotes/${id}`, form);
+      await axios.put(`http://localhost:8080/api/admin/quotes/${id}`, form, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        },
+      });
       alert("수정되었습니다.");
       setEditMode(false);
       setQuote((prev) => ({ ...prev, ...form })); // 로컬 상태 업데이트
