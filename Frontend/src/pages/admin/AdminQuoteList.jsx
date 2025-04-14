@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isAdminAuthenticated } from "../../utils/auth";
+import { fetchAdminQuotes } from "../../api/adminApi";
 import axios from "axios";
 
 export default function AdminQuoteList() {
@@ -12,15 +14,31 @@ export default function AdminQuoteList() {
   const pageSize = 10; // 페이지당 항목 수
 
   useEffect(() => {
+    if (!isAdminAuthenticated()) {
+      return;
+    } // 인증 확인
+
     axios
       .get(
-        `http://localhost:8080/api/admin/quotes?page=${page}&size=${pageSize}`
+        `http://localhost:8080/api/admin/quotes?page=${page}&size=${pageSize}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
       )
       .then((res) => {
         setQuotes(res.data.content);
         setTotal(res.data.totalElements);
       })
-      .catch((err) => console.error("목록 조회 실패:", err));
+      .catch((err) => {
+        console.error("목록 조회 실패:", err);
+        if (err.response?.status === 401) {
+          alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+          localStorage.removeItem("adminToken");
+          navigate("/admin/login");
+        }
+      });
   }, [page]);
 
   const totalPages = Math.ceil(total / pageSize); // 총 페이지 수
@@ -86,7 +104,7 @@ export default function AdminQuoteList() {
         {Array.from({ length: totalPages }, (_, idx) => (
           <button
             key={idx}
-            onClick={() => setPage(idx+1)}
+            onClick={() => setPage(idx + 1)}
             className={`px-3 py-1 rounded ${
               page === idx ? "bg-blue-600 text-white" : "bg-gray-200"
             }`}
