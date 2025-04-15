@@ -1,6 +1,29 @@
 import { useRef } from "react";
 import useQuoteFormStore from "../../stores/useQuoteFormStore";
 
+const validateForm = (form) => {
+  const errors = {};
+  if (!form.serviceType) errors.serviceType = "필수 입력 항목입니다";
+  if (!form.spaceType) errors.spaceType = "필수 입력 항목입니다";
+  if (!form.name) errors.name = "필수 입력 항목입니다";
+  if (!form.phone) errors.phone = "필수 입력 항목입니다";
+  if (!form.email) errors.email = "필수 입력 항목입니다";
+
+  if (!/^[가-힣a-zA-Z\s]{2,}$/.test(form.name)) {
+    errors.name = "이름은 한글 또는 영문 2자 이상이어야 합니다.";
+  }
+  if (!/^\d{3}-\d{3,4}-\d{4}$/.test(form.phone)) {
+    errors.phone = "유효한 전화번호 형식이 아닙니다. 예: 010-1234-5678";
+  }
+  if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+    errors.email = "유효한 이메일 형식이 아닙니다.";
+  }
+  if (form.area && !/^\d+$/.test(form.area)) {
+    errors.area = "면적은 숫자만 입력 가능합니다.";
+  }
+  return errors;
+};
+
 const QuoteRequest = () => {
   const {
     form,
@@ -25,15 +48,19 @@ const QuoteRequest = () => {
     area: useRef(),
   };
 
+  const updateField = (name, value) => {
+    setForm({ ...form, [name]: value });
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     if (name === "area") {
       const onlyNumbers = value.replace(/[^0-9]/g, "");
-      setForm({ ...form, [name]: onlyNumbers });
-      if (errors.area && onlyNumbers) {
-        setErrors((prev) => ({ ...prev, area: undefined }));
-      }
+      updateField(name, onlyNumbers);
       return;
     }
 
@@ -44,23 +71,11 @@ const QuoteRequest = () => {
       } else if (formatted.length > 7) {
         formatted = formatted.replace(/(\d{3})(\d{4})(\d{0,4})/, "$1-$2-$3");
       }
-      setForm({ ...form, [name]: formatted });
-      if (errors.phone && formatted) {
-        setErrors((prev) => ({ ...prev, phone: undefined }));
-      }
+      updateField(name, formatted);
       return;
     }
 
-    const updatedForm = {
-      ...form,
-      [name]: type === "checkbox" ? checked : value,
-    };
-    setForm(updatedForm);
-
-    // 필수 필드 수정 시 에러 제거
-    if (errors[name] && updatedForm[name]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
+    updateField(name, type === "checkbox" ? checked : value);
   };
 
   const handleImageChange = (e) => {
@@ -73,7 +88,7 @@ const QuoteRequest = () => {
     );
 
     if (invalidFiles.length > 0) {
-      alert("이미지는 형식만 가능, 파일당 최대 5MB까지 업로드 가능합니다.");
+      alert("이미지 형식만 가능, 파일당 최대 5MB까지 업로드 가능합니다.");
       e.target.value = "";
       setImages([]);
       return;
@@ -84,48 +99,12 @@ const QuoteRequest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const required = ["serviceType", "spaceType", "name", "phone", "email"];
-    const newErrors = {};
-    for (let field of required) {
-      if (!form[field]) {
-        newErrors[field] = "필수 입력 항목입니다";
-      }
-    }
+    const validationErrors = validateForm(form);
+    setErrors(validationErrors);
 
-    setErrors(newErrors);
-
-    // 🔽 추가 정규식 기반 검증
-    if (!/^\d{3}-\d{3,4}-\d{4}$/.test(form.phone)) {
-      newErrors.phone = "유효한 전화번호 형식이 아닙니다. 예: 010-1234-5678";
-    }
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) {
-      newErrors.email = "유효한 이메일 형식이 아닙니다.";
-    }
-    if (!/^[가-힣a-zA-Z\s]{2,}$/.test(form.name)) {
-      newErrors.name = "이름은 한글 또는 영문 2자 이상이어야 합니다.";
-    }
-    if (form.area && !/^\d+$/.test(form.area)) {
-      newErrors.area = "면적은 숫자만 입력 가능합니다.";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      const firstField = Object.keys(newErrors)[0];
+    if (Object.keys(validationErrors).length > 0) {
+      const firstField = Object.keys(validationErrors)[0];
       refs[firstField]?.current?.focus();
-      return;
-    }
-
-    if (
-      images.some(
-        (img) => !["image/jpeg", "image/png", "image/gif"].includes(img.type)
-      )
-    ) {
-      alert("지원하지 않는 파일 형식입니다. JPEG, PNG, GIF만 가능합니다.");
-      return;
-    }
-
-    if (images.some((img) => img.size > 5 * 1024 * 1024)) {
-      alert("파일 크기가 5MB를 초과할 수 없습니다.");
       return;
     }
 
@@ -143,7 +122,6 @@ const QuoteRequest = () => {
     if (images.length > 0) {
       images.forEach((file) => formData.append("images", file));
     } else {
-      // 빈 파일 배열일 경우에도 키를 명시적으로 추가 (null이나 빈 Blob 허용)
       formData.append("images", new Blob([]), "");
     }
 
