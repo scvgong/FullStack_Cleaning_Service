@@ -72,6 +72,20 @@ const QuoteRequest = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+    const validTypes = ["image/jpeg", "image/png", "image/gif"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    const invalidFiles = files.filter(
+      (file) => !validTypes.includes(file.type) || file.size > maxSize
+    );
+
+    if (invalidFiles.length > 0) {
+      alert("이미지는 형식만 가능, 파일당 최대 5MB까지 업로드 가능합니다.");
+      e.target.value = "";
+      setImages([]);
+      return;
+    }
+
     setImages(files);
   };
 
@@ -89,6 +103,20 @@ const QuoteRequest = () => {
     if (Object.keys(newErrors).length > 0) {
       const firstField = Object.keys(newErrors)[0];
       refs[firstField]?.current?.focus();
+      return;
+    }
+
+    if (
+      images.some(
+        (img) => !["image/jpeg", "image/png", "image/gif"].includes(img.type)
+      )
+    ) {
+      alert("지원하지 않는 파일 형식입니다. JPEG, PNG, GIF만 가능합니다.");
+      return;
+    }
+
+    if (images.some((img) => img.size > 5 * 1024 * 1024)) {
+      alert("파일 크기가 5MB를 초과할 수 없습니다.");
       return;
     }
 
