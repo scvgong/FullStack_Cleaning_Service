@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화 (필요 시 활성화 가능)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안함
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/uploads/**").permitAll() // 정적 파일 허용
                         .requestMatchers("/api/admin/auth/**").permitAll() // 로그인 관련 API 허용
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 )

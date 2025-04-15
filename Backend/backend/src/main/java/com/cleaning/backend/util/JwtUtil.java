@@ -20,6 +20,10 @@ public class JwtUtil {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512); // ✅ 자동으로 안전한 키 생성
     }
 
+    public SecretKey getKey(){
+        return this.key;
+    }
+
     public String generateToken(AdminUser user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
