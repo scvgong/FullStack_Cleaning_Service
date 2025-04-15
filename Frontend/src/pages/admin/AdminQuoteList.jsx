@@ -46,7 +46,11 @@ export default function AdminQuoteList() {
   const handleDelete = async (id) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/admin/quotes/${id}`);
+        await axios.delete(`http://localhost:8080/api/admin/quotes/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        });
         alert("삭제되었습니다.");
         // 목록 다시 불러오기
         setQuotes((prev) => prev.filter((quote) => quote.id !== id));
