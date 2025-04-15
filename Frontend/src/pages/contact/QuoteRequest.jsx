@@ -1,22 +1,20 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
+import useQuoteFormStore from "../../stores/useQuoteFormStore";
 
 const QuoteRequest = () => {
-  const [form, setForm] = useState({
-    serviceType: "",
-    spaceType: "",
-    area: "",
-    name: "",
-    phone: "",
-    email: "",
-    location: "",
-    message: "",
-    agree: false,
-  });
-
-  const [images, setImages] = useState([]);
-  const [errors, setErrors] = useState({});
-  const [submitSuccess, setSubmitSuccess] = useState(null);
-  const [showPreview, setShowPreview] = useState(false);
+  const {
+    form,
+    images,
+    errors,
+    submitSuccess,
+    showPreview,
+    setForm,
+    setImages,
+    setErrors,
+    setSubmitSuccess,
+    setShowPreview,
+    resetForm,
+  } = useQuoteFormStore();
 
   const refs = {
     serviceType: useRef(),
@@ -63,11 +61,6 @@ const QuoteRequest = () => {
     if (errors[name] && updatedForm[name]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
@@ -146,34 +139,29 @@ const QuoteRequest = () => {
       "data",
       new Blob([JSON.stringify(form)], { type: "application/json" })
     );
-    images.forEach((file) => formData.append("images", file));
+
+    if (images.length > 0) {
+      images.forEach((file) => formData.append("images", file));
+    } else {
+      // 빈 파일 배열일 경우에도 키를 명시적으로 추가 (null이나 빈 Blob 허용)
+      formData.append("images", new Blob([]), "");
+    }
 
     try {
       const response = await fetch("http://localhost:8080/api/quotes", {
         method: "POST",
         body: formData,
       });
+
+      const responseText = await response.text();
+      console.log("응답 내용:", responseText);
       console.log("response", response);
 
       if (response.ok) {
-        setSubmitSuccess(true);
         alert("견적 문의가 성공적으로 접수되었습니다!");
-        setForm({
-          serviceType: "",
-          spaceType: "",
-          area: "",
-          name: "",
-          phone: "",
-          email: "",
-          location: "",
-          message: "",
-          agree: false,
-        });
-        setImages(null);
-        setErrors({});
-        setSubmitSuccess(true);
+        resetForm({});
       } else {
-        alert("견적 문의 전송 중 오류가 발생했습니다.");
+        alert("견적 문의 전송 중 오류가 발생했습니다." + responseText);
       }
     } catch (error) {
       console.error("전송 오류:", error);

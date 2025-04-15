@@ -23,7 +23,7 @@ public class QuoteController {
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<String> receiveQuote(
             @RequestPart("data") QuoteRequestDto dto,
-            @RequestPart("images") List<MultipartFile> images) {
+            @RequestPart(value = "images", required = false) List<MultipartFile> images) {
 
         // 이미지 유효성 검사, 파일 형식 및 용량
         long maxSize = 5 * 1024 * 1024;
@@ -42,9 +42,10 @@ public class QuoteController {
         }
 
         // 전화번호 정규식 (010-1234-5678 형식)
-        if (dto.getPhone().matches("^\\d{3}-\\d{3,4}-\\d{4}$")) {
+        if (!dto.getPhone().matches("^\\d{3}-\\d{3,4}-\\d{4}$")) {
             return ResponseEntity.badRequest().body("유효한 전화번호 형식이 아닙니다.");
         }
+
 
         // 이메일 정규식
         if (!dto.getEmail().matches("^\\S+@\\S+\\.\\S+$")) {
