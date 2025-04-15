@@ -41,6 +41,27 @@ public class QuoteController {
             }
         }
 
+        // 전화번호 정규식 (010-1234-5678 형식)
+        if (dto.getPhone().matches("^\\d{3}-\\d{3,4}-\\d{4}$")) {
+            return ResponseEntity.badRequest().body("유효한 전화번호 형식이 아닙니다.");
+        }
+
+        // 이메일 정규식
+        if (!dto.getEmail().matches("^\\S+@\\S+\\.\\S+$")) {
+            return ResponseEntity.badRequest().body("유효한 이메일 형식이 아닙니다.");
+        }
+
+        // 이름 유효성 (한글 또는 영문 2자 이상)
+        if (!dto.getName().matches("^[가-힣a-zA-Z\\s]{2,}$")) {
+            return ResponseEntity.badRequest().body("이름은 한글 또는 영문 2자 이상이어야 합니다.");
+        }
+
+        // 면적 유효성 (숫자만 허용)
+        if (dto.getArea() != null && !dto.getArea().matches("^\\d+$")) {
+            return ResponseEntity.badRequest().body("면적은 숫자만 입력 가능합니다.");
+        }
+
+
         quoteRequestService.saveQuote(dto, images);
         return ResponseEntity.ok("견적 요청이 성공적으로 접수되었습니다.");
     }
