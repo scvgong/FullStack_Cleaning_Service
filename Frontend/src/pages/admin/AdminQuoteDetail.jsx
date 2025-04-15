@@ -137,7 +137,7 @@ export default function AdminQuoteDetail() {
           {quote.images.map((img, index) => (
             <img
               key={index}
-              src={encodeURI(`/uploads/${img.filePath}`)}
+              src={`http://localhost:8080/uploads/${img.filePath}`}
               alt={`견적 이미지 ${index + 1}`}
               style={{
                 width: "200px",
