@@ -100,7 +100,23 @@ const QuoteRequest = () => {
     }
 
     setErrors(newErrors);
+
+    // 🔽 추가 정규식 기반 검증
+    if (!/^\d{3}-\d{3,4}-\d{4}$/.test(form.phone)) {
+      newErrors.phone = "유효한 전화번호 형식이 아닙니다. 예: 010-1234-5678";
+    }
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+      newErrors.email = "유효한 이메일 형식이 아닙니다.";
+    }
+    if (!/^[가-힣a-zA-Z\s]{2,}$/.test(form.name)) {
+      newErrors.name = "이름은 한글 또는 영문 2자 이상이어야 합니다.";
+    }
+    if (form.area && !/^\d+$/.test(form.area)) {
+      newErrors.area = "면적은 숫자만 입력 가능합니다.";
+    }
+
     if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       const firstField = Object.keys(newErrors)[0];
       refs[firstField]?.current?.focus();
       return;
