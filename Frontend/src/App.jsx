@@ -15,6 +15,7 @@ import WallCleaning from "./pages/cleaning/WallCleaning";
 import QuoteRequest from "./pages/contact/QuoteRequest";
 import Gallery from "./pages/Gallery";
 import AdminLogin from "./pages/admin/AdminLogin";
+import AdminRegister from "./pages/admin/AdminRegister";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/quotes" element={<AdminQuoteList />} />
           <Route path="/admin/quotes/:id" element={<AdminQuoteDetail />} />
+          <Route path="/admin/register" element={<AdminRegister />} />
         </Routes>
       </MainLayout>
     </Router>
