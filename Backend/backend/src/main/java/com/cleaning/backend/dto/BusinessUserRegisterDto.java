@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class BusinessUserRegisterDto {
+    private long id;
     private String username;
     private String password;
     private String name;

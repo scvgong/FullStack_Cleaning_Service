@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cleaning.backend.mapper.AdminUserMapper">
+    <select id="findByUsername" resultType="com.cleaning.backend.model.AdminUser">
+        SELECT *
+        FROM admin_user
+        WHERE USERNAME = #{username}
+    </select>
+
+    <insert id="insertAdminUser">
+        INSERT INTO ADMIN_USER (ID, USERNAME, PASSWORD, NAME, ROLE, CREATED_AT)
+        VALUES (#{id}, #{username}, #{password}, #{name}, #{role}, NOW())
+    </insert>
+</mapper>

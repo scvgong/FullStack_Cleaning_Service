@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cleaning.backend.mapper.BusinessUserMapper">
+    <insert id="insertBusinessUser">
+        INSERT INTO BUSINESS_USER (
+        ID, USERNAME, PASSWORD, NAME, BUSINESS_NO,
+        PHONE, ALT_PHONE, BIZ_DOC_PATH, CATEGORY, CREATED_AT
+        ) VALUES (
+        #{dto.id},
+        #{dto.username}, #{dto.password}, #{dto.name}, #{dto.businessNo},
+        #{dto.phone}, #{dto.altPhone}, #{filePath}, #{dto.category}, NOW()
+        )
+    </insert>
+</mapper>
