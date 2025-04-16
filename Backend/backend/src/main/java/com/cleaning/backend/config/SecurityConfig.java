@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/uploads/**").permitAll() // 정적 파일 허용
                         .requestMatchers("/api/admin/auth/**").permitAll() // 로그인 관련 API 허용
                         .requestMatchers("/api/quotes").permitAll() // ✅ 사용자 견적 요청 허용
+                        .requestMatchers("/api/business/**").permitAll() // 사업자 회원가입 요청 허용
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가

@@ -2,6 +2,7 @@ package com.cleaning.backend.service.serviceimpl;
 
 import com.cleaning.backend.dto.BusinessUserRegisterDto;
 import com.cleaning.backend.mapper.BusinessUserMapper;
+import com.cleaning.backend.service.BusinessUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class BusinessUserServiceImpl {
+public class BusinessUserServiceImpl implements BusinessUserService {
     private final BusinessUserMapper mapper;
     private final PasswordEncoder passwordEncoder;
 

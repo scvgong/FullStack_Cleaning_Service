@@ -8,9 +8,11 @@ const AdminRegister = () => {
     username: "",
     password: "",
     name: "",
+    role: "BUSINESS",
     category: "",
     phone: "",
     mobile: "",
+    businessNumber: "",
   });
 
   const [certFile, setCertFile] = useState(null);
@@ -46,7 +48,15 @@ const AdminRegister = () => {
       formData.append("certFile", certFile);
     }
     try {
-      await axios.post("http://localhost:8080/api/admin/auth/register", form);
+      await axios.post(
+        "http://localhost:8080/api/admin/auth/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("회원가입이 완료되었습니다!");
       navigate("/admin/login");
     } catch (err) {
