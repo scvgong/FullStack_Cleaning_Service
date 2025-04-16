@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/business")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
-public class BussinessUserController {
+public class BusinessUserController {
     private final BusinessUserService businessUserService;
 
     @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

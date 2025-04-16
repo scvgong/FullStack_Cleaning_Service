@@ -12,7 +12,7 @@ const AdminRegister = () => {
     category: "",
     phone: "",
     mobile: "",
-    businessNumber: "",
+    businessNo: "",
   });
 
   const [certFile, setCertFile] = useState(null);
@@ -34,7 +34,7 @@ const AdminRegister = () => {
       return;
     }
 
-    if (!form.businessNumber.match(/^\d+$/)) {
+    if (!form.businessNo.match(/^\d+$/)) {
       setError("사업자 번호는 숫자만 입력 가능합니다.");
       return;
     }
@@ -49,7 +49,7 @@ const AdminRegister = () => {
     }
     try {
       await axios.post(
-        "http://localhost:8080/api/admin/auth/register",
+        "http://localhost:8080/api/business/register",
         formData,
         {
           headers: {
@@ -95,9 +95,9 @@ const AdminRegister = () => {
           className="w-full border px-3 py-2 rounded"
         />
         <input
-          name="businessNumber"
+          name="businessNo"
           placeholder="사업자 번호 (숫자만)"
-          value={form.businessNumber}
+          value={form.businessNo}
           onChange={handleChange}
           required
           className="w-full border px-3 py-2 rounded"
