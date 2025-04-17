@@ -11,7 +11,7 @@
         ) VALUES (
         BUSINESS_USER_SEQ.NEXTVAL,
         #{dto.username}, #{dto.password}, #{dto.name}, #{dto.businessNo},
-        #{dto.phone}, #{dto.altPhone}, #{filePath}, #{dto.category}, SYSTIMESTAMP
+        #{dto.phone}, #{dto.altPhone, jdbcType=VARCHAR}, #{filePath, jdbcType=VARCHAR}, #{dto.category}, SYSTIMESTAMP
         )
     </insert>
 </mapper>
