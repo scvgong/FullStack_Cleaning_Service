@@ -14,4 +14,20 @@
         #{dto.phone}, #{dto.altPhone}, #{filePath}, #{dto.category}, NOW()
         )
     </insert>
+
+    <select id ="findByUsername" resultType="com.cleaning.backend.model.BusinessUser">
+        SELECT
+        ID,
+        USERNAME,
+        PASSWORD,
+        NAME,
+        BUSINESS_NO,
+        PHONE,
+        ALT_PHONE,
+        BIZ_DOC_PATH,
+        CATEGORY,
+        CREATED_AT
+        FROM BUSINESS_USER
+        WHERE USERNAME = #{username}
+    </select>
 </mapper>

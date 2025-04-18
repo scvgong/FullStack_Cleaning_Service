@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface BusinessUserMapper {
-    BusinessUser findByUsername(String username);
+    BusinessUser findByUsername(@Param("username") String username);
     void insertBusinessUser(@Param("dto") BusinessUserRegisterDto dto, @Param("filePath") String filePath);
 }

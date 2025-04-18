@@ -17,10 +17,16 @@ public class BusinessAuthServiceImpl implements BusinessAuthService {
 
     @Override
     public BusinessUser login(String username, String rawPassword) {
-        BusinessUser u = mapper.findByUsername(username);
-        if (u != null && encoder.matches(rawPassword, u.getPassword())) {
-            return u;
+        BusinessUser user = mapper.findByUsername(username);
+        if (user != null && encoder.matches(rawPassword, user.getPassword())) {
+            return user;
         }
+        System.out.println(">> 로그인 시도: " + username + " / db-pw=" + user.getPassword());
+        System.out.println("rawPassword = " + rawPassword);
+        System.out.println("encodedPw   = " + user.getPassword());
+        System.out.println("matches     = " + encoder.matches(rawPassword, user.getPassword()));
+
+
         return null;
     }
 }
