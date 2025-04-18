@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cleaning.backend.mapper.BusinessUserMapper">
+    <!-- 사업자 회원가입 -->
     <insert id="insertBusinessUser">
         INSERT INTO BUSINESS_USER (
         ID, USERNAME, PASSWORD, NAME, BUSINESS_NO,
@@ -14,4 +15,11 @@
         #{dto.phone}, #{dto.altPhone, jdbcType=VARCHAR}, #{filePath, jdbcType=VARCHAR}, #{dto.category}, SYSTIMESTAMP
         )
     </insert>
+
+    <!-- 사업자 회원 찾기 -->
+    <select id="findByUsername" resultType="com.cleaning.backend.model.BusinessUser">
+        SELECT * FROM BUSINESS_USER
+        WHERE USERNAME = #{username}
+    </select>
+
 </mapper>
