@@ -2,7 +2,7 @@ package com.cleaning.backend.controller;
 
 import com.cleaning.backend.dto.AdminLoginRequestDto;
 import com.cleaning.backend.model.AdminUser;
-import com.cleaning.backend.service.AdminAuthService;
+import com.cleaning.backend.service.serviceimpl.AdminAuthServiceImpl;
 import com.cleaning.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import java.util.Map;
 @RequestMapping("/api/admin/auth")
 @RequiredArgsConstructor
 public class AdminAuthController {
-    private final AdminAuthService authService;
+    private final AdminAuthServiceImpl authService;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
