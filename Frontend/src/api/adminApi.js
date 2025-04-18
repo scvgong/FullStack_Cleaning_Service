@@ -19,3 +19,4 @@ export const fetchAdminQuotes = async () => {
   });
   return response.data;
 };
+

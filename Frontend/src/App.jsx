@@ -14,8 +14,9 @@ import CarpetCleaning from "./pages/cleaning/CarpetCleaning";
 import WallCleaning from "./pages/cleaning/WallCleaning";
 import QuoteRequest from "./pages/contact/QuoteRequest";
 import Gallery from "./pages/Gallery";
-import AdminLogin from "./pages/admin/AdminLogin";
+import AuthLogin from "./pages/admin/AuthLogin";
 import AdminRegister from "./pages/admin/AdminRegister";
+import BusinessDashboard from "./pages/business/BusinessDashboard";
 
 function App() {
   return (
@@ -38,10 +39,11 @@ function App() {
           <Route path="/special-cleaning/wall" element={<WallCleaning />} />
           <Route path="/contact/quote" element={<QuoteRequest />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/login" element={<AuthLogin />} />
           <Route path="/admin/quotes" element={<AdminQuoteList />} />
           <Route path="/admin/quotes/:id" element={<AdminQuoteDetail />} />
           <Route path="/admin/register" element={<AdminRegister />} />
+          <Route path="/business/dashboard" element={<BusinessDashboard />} />
         </Routes>
       </MainLayout>
     </Router>
