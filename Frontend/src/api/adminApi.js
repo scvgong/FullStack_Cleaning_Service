@@ -20,3 +20,15 @@ export const fetchAdminQuotes = async () => {
   return response.data;
 };
 
+export async function createFaq(token, question, answer){
+  const res = await axios.post(
+    `${BASE_URL}/faqs`,
+    { question, answer },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return res.data;
+}

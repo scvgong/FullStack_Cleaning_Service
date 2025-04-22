@@ -14,11 +14,16 @@ import CarpetCleaning from "./pages/cleaning/CarpetCleaning";
 import WallCleaning from "./pages/cleaning/WallCleaning";
 import QuoteRequest from "./pages/contact/QuoteRequest";
 import Gallery from "./pages/Gallery";
+
 import AuthLogin from "./pages/admin/AuthLogin";
 import AdminRegister from "./pages/admin/AdminRegister";
+
 import BusinessDashboard from "./pages/business/BusinessDashboard";
 import BusinessQuoteList from "./pages/business/BusinessQuoteList";
 import BusinessQuoteDetail from "./pages/business/BusinessQuoteDetail";
+
+import FaqCreate from "./pages/admin/FaqCreate";
+import FaqList from "./pages/admin/FaqList";
 
 function App() {
   return (
@@ -51,6 +56,8 @@ function App() {
             path="/business/quotes/:id"
             element={<BusinessQuoteDetail />}
           />
+          <Route path="/admin/faqs" element={<FaqList />} />
+          <Route path="/admin/faqs/create" element={<FaqCreate />} />
         </Routes>
       </MainLayout>
     </Router>
