@@ -19,3 +19,15 @@ export async function getBusinessQuotes(token) {
   });
   return res.data;
 }
+
+export async function getBusinessQuoteById(token, id) {
+  const res = await axios.get(
+    `http://localhost:8080/api/business/quotes/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return res.data;
+}

@@ -18,6 +18,7 @@ import AuthLogin from "./pages/admin/AuthLogin";
 import AdminRegister from "./pages/admin/AdminRegister";
 import BusinessDashboard from "./pages/business/BusinessDashboard";
 import BusinessQuoteList from "./pages/business/BusinessQuoteList";
+import BusinessQuoteDetail from "./pages/business/BusinessQuoteDetail";
 
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
           <Route path="/admin/register" element={<AdminRegister />} />
           <Route path="/business/dashboard" element={<BusinessDashboard />} />
           <Route path="/business/quotes" element={<BusinessQuoteList />} />
+          <Route
+            path="/business/quotes/:id"
+            element={<BusinessQuoteDetail />}
+          />
         </Routes>
       </MainLayout>
     </Router>

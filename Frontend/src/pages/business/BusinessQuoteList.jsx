@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getBusinessQuotes } from "../../api/businessApi";
+import { Link } from "react-router-dom";
 
 const BusinessQuoteList = () => {
   const [quotes, setQuotes] = useState([]);
@@ -43,6 +44,15 @@ const BusinessQuoteList = () => {
                     />
                   ))}
                 </div>
+              </div>
+              {/* 상세보기 버튼 */}
+              <div className="mt-3">
+                <Link
+                  to={`/business/quotes/${q.id}`}
+                  className="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                >
+                  상세보기
+                </Link>
               </div>
             </li>
           ))}
