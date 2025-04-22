@@ -39,8 +39,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안함
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/uploads/**").permitAll() // 정적 파일 허용
-                        .requestMatchers("/api/admin/auth/**").permitAll() // 로그인 관련 API 허용
-                        .requestMatchers("/api/business/auth/**").permitAll() // 로그인 관련 API 허용
+                        .requestMatchers("/api/admin/auth/**").permitAll() // 관리자 로그인 관련 API 허용
+                        .requestMatchers("/api/business/auth/**").permitAll() // 사업자 로그인 관련 API 허용
                         .requestMatchers("/api/quotes").permitAll() // ✅ 사용자 견적 요청 허용
                         .requestMatchers("/api/business/**").permitAll() // 사업자 회원가입 요청 허용
                         .requestMatchers("/api/business/quotes/**").hasAnyAuthority("BUSINESS") // 사업자 게시판 요청 허용
