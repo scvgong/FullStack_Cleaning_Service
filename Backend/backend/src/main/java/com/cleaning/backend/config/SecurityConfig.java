@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/uploads/**").permitAll() // 정적 파일 허용
                         .requestMatchers("/api/admin/auth/**").permitAll() // 관리자 로그인 관련 API 허용
+                        .requestMatchers("/api/admin/faqs").hasRole("ADMIN") // 관리자 전용 FAQ 작성 권한 추가
                         .requestMatchers("/api/business/auth/**").permitAll() // 사업자 로그인 관련 API 허용
                         .requestMatchers("/api/quotes").permitAll() // ✅ 사용자 견적 요청 허용
                         .requestMatchers("/api/business/register").permitAll() // 사업자 회원가입 요청 허용

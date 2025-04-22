@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cleaning.backend.mapper.FaqMapper">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO FAQ (ID, QUESTION, ANSWER, CREATED_AT)
+        VALUES (#{id}, #{question}, #{answer}, NOW())
+    </insert>
+</mapper>
