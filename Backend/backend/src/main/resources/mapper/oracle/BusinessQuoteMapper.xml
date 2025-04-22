@@ -27,4 +27,38 @@
         WHERE quote_id = #{quoteId}
     </select>
 
+    <select id="findByIdAndCategory" resultMap="DetailMap">
+        SELECT
+        qr.id,
+        qr.service_type AS serviceType,
+        qr.space_type   AS spaceType,
+        qr.area,
+        qr.name,
+        qr.phone,
+        qr.email,
+        qr.location,
+        qr.message,
+        qi.file_path    AS imageUrl
+        FROM quote_request qr
+        LEFT JOIN quote_images qi ON qi.quote_id = qr.id
+        WHERE qr.id = #{id}
+        AND qr.service_type = #{category}
+    </select>
+
+    <resultMap id="DetailMap" type="com.cleaning.backend.dto.BusinessQuoteResponseDto">
+        <id    column="id"          property="id"/>
+        <result column="serviceType" property="serviceType"/>
+        <result column="spaceType"   property="spaceType"/>
+        <result column="area"        property="area"/>
+        <result column="name"        property="name"/>
+        <result column="phone"       property="phone"/>
+        <result column="email"       property="email"/>
+        <result column="location"    property="location"/>
+        <result column="message"     property="message"/>
+        <!-- collection 으로 이미지 URL 모으기 -->
+        <collection property="images" ofType="String">
+            <result column="imageUrl"/>
+        </collection>
+    </resultMap>
+
 </mapper>

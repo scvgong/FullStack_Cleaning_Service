@@ -20,4 +20,9 @@ public class BusinessQuoteServiceImpl implements BusinessQuoteService {
         list.forEach(q -> q.setImages(mapper.findImagesByQuoteId(q.getId())));
         return list;
     }
+
+    @Override
+    public BusinessQuoteResponseDto getQuoteDetail(Long id, String category) {
+        return mapper.findByIdAndCategory(id, category);
+    }
 }

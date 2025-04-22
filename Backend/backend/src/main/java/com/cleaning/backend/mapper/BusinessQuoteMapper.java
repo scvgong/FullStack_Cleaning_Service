@@ -10,4 +10,6 @@ import java.util.List;
 public interface BusinessQuoteMapper {
     List<BusinessQuoteResponseDto> findByCategory(@Param("category") String category);
     List<String> findImagesByQuoteId(@Param("quoteId") Long quoteId);
+
+    BusinessQuoteResponseDto findByIdAndCategory(Long id, String category);
 }
