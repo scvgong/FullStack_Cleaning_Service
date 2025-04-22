@@ -36,11 +36,12 @@ public class JwtUtil {
     }
 
     // 오버로드: username, role, id 직접 전달
-    public String generateToken(String username, String role, Long userId) {
+    public String generateToken(String username, String role, Long userId, String category) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role)
                 .claim("userId", userId)
+                .claim("category", category)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)
@@ -48,7 +49,7 @@ public class JwtUtil {
     }
 
     // 파싱 유틸
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(key)
                 .parseClaimsJws(token)
@@ -75,4 +76,5 @@ public class JwtUtil {
             return false;
         }
     }
+
 }

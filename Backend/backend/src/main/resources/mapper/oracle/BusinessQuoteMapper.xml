@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- resources/mapper/mysql/BusinessQuoteMapper.xml -->
+<mapper namespace="com.cleaning.backend.mapper.BusinessQuoteMapper">
+
+    <!-- 사업자 카테고리로 필터링 -->
+    <select id="findByCategory" parameterType="string" resultType="com.cleaning.backend.dto.BusinessQuoteResponseDto">
+        SELECT qr.id,
+        qr.service_type      AS serviceType,
+        qr.space_type        AS spaceType,
+        qr.area,
+        qr.name,
+        qr.phone,
+        qr.email,
+        qr.location,
+        qr.message
+        FROM quote_request qr
+        WHERE qr.service_type = #{category, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 이미지는 별도 쿼리 또는 조인으로 가져와도 됩니다 -->
+    <select id="findImagesByQuoteId" resultType="String">
+        SELECT file_path
+        FROM quote_images
+        WHERE quote_id = #{quoteId}
+    </select>
+
+</mapper>

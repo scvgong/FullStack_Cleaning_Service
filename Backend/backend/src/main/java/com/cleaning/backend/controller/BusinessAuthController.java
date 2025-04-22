@@ -20,9 +20,10 @@ public class BusinessAuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody BusinessLoginRequestDto dto) {
         BusinessUser u = authService.login(dto.getUsername(), dto.getPassword());
-        if (u == null)
+        if (u == null) {
             return ResponseEntity.status(401).body("Invalid credentials");
-        String token = jwtUtil.generateToken(u.getUsername(), "BUSINESS", u.getId());
+        }
+        String token = jwtUtil.generateToken(u.getUsername(), "BUSINESS", u.getId(), u.getCategory());
         return ResponseEntity.ok(Map.of("token", token));
     }
 }

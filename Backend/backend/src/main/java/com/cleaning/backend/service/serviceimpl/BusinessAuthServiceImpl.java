@@ -21,12 +21,10 @@ public class BusinessAuthServiceImpl implements BusinessAuthService {
         if (user != null && encoder.matches(rawPassword, user.getPassword())) {
             return user;
         }
-        System.out.println(">> 로그인 시도: " + username + " / db-pw=" + user.getPassword());
-        System.out.println("rawPassword = " + rawPassword);
-        System.out.println("encodedPw   = " + user.getPassword());
-        System.out.println("matches     = " + encoder.matches(rawPassword, user.getPassword()));
-
-
+//        System.out.println(">> 로그인 시도: " + username + " / db-pw=" + user.getPassword());
+//        System.out.println("rawPassword = " + rawPassword);
+//        System.out.println("encodedPw   = " + user.getPassword());
+//        System.out.println("matches     = " + encoder.matches(rawPassword, user.getPassword()));
         return null;
     }
 }

@@ -17,6 +17,7 @@ import Gallery from "./pages/Gallery";
 import AuthLogin from "./pages/admin/AuthLogin";
 import AdminRegister from "./pages/admin/AdminRegister";
 import BusinessDashboard from "./pages/business/BusinessDashboard";
+import BusinessQuoteList from "./pages/business/BusinessQuoteList";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path="/admin/quotes/:id" element={<AdminQuoteDetail />} />
           <Route path="/admin/register" element={<AdminRegister />} />
           <Route path="/business/dashboard" element={<BusinessDashboard />} />
+          <Route path="/business/quotes" element={<BusinessQuoteList />} />
         </Routes>
       </MainLayout>
     </Router>

@@ -2,6 +2,7 @@ package com.cleaning.backend.filter;
 
 
 import com.cleaning.backend.util.JwtUtil;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,28 +28,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             if (jwtUtil.validateToken(token)) {
-                String username = jwtUtil.extractUsername(token);
-                String role  = Jwts.parser()
-                        .setSigningKey(jwtUtil.getKey()) // key getter 필요
-                        .parseClaimsJws(token)
-                        .getBody()
-                        .get("role", String.class);
+//                String username = jwtUtil.extractUsername(token);
+                Claims claims = jwtUtil.extractAllClaims(token);
+                String role  = claims.get("role", String.class);
 
-                // ROLE 접두어 필수
+                // 2) role 클레임을 이용해 GrantedAuthority 생성
                 List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(username, null, authorities);
+                // 3) principal 에 Claims 객체, credentials 는 null
+                UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(
+                                claims,       // ← principal: Claims
+                                null,         // ← credentials
+                                authorities   // ← authorities
+                        );
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
 
