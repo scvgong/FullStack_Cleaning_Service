@@ -68,6 +68,7 @@ function App() {
         {/* 사업자용 Routes */}
         <Route path="business" element={<BizLayout />}>
           <Route path="login" element={<AuthLogin />} />
+          <Route path="/business/login" element={<AuthLogin />} />
           <Route path="dashboard" element={<BusinessDashboard />} />
           <Route path="quotes" element={<BusinessQuoteList />} />
           <Route path="quotes/:id" element={<BusinessQuoteDetail />} />

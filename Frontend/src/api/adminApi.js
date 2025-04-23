@@ -20,7 +20,7 @@ export const fetchAdminQuotes = async () => {
   return response.data;
 };
 
-export async function createFaq(token, question, answer){
+export async function createFaq(token, question, answer) {
   const res = await axios.post(
     `${BASE_URL}/faqs`,
     { question, answer },
@@ -32,3 +32,10 @@ export async function createFaq(token, question, answer){
   );
   return res.data;
 }
+
+export const fetchFaqs = async (token) => {
+  const res = await axios.get(`${BASE_URL}/faqs`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data; // [{ id, question, answer, createdAt }, …]
+};
