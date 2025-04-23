@@ -80,6 +80,11 @@ const Header = () => {
               갤러리
             </Link>
           </li>
+          <li>
+            <Link to="/admin/login" className="hover:text-blue-600">
+              관리자/사업자 로그인
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
