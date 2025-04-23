@@ -9,6 +9,7 @@ import BizLayout from "./layouts/BizLayout";
 
 import AdminQuoteList from "./pages/admin/AdminQuoteList";
 import AdminQuoteDetail from "./pages/admin/AdminQuoteDetail";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 // 추가된 페이지 컴포넌트
 import MoveInCleaning from "./pages/cleaning/MoveInCleaning";
@@ -54,7 +55,9 @@ function App() {
 
         {/* 관리자용용 Routes */}
         <Route path="admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
           <Route path="login" element={<AuthLogin />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="quotes" element={<AdminQuoteList />} />
           <Route path="quotes/:id" element={<AdminQuoteDetail />} />
           <Route path="register" element={<AdminRegister />} />

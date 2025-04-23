@@ -16,10 +16,10 @@ const AuthLogin = () => {
     setError("");
     try {
       let token;
-      if(role === "ADMIN") {
+      if (role === "ADMIN") {
         token = await loginAdmin(username, password);
         localStorage.setItem("adminToken", token);
-        navigate("/admin/quotes");
+        navigate("/admin/dashboard");
       } else {
         token = await loginBusiness(username, password);
         localStorage.setItem("businessToken", token);
@@ -94,13 +94,15 @@ const AuthLogin = () => {
 
       <p className="mt-4 text-center text-sm">
         {role === "ADMIN" ? (
-          <>사업자이신가요?{" "}
+          <>
+            사업자이신가요?{" "}
             <Link to="/admin/register" className="text-blue-600 underline">
               회원가입
             </Link>
           </>
         ) : (
-          <>관리자이신가요?{" "}
+          <>
+            관리자이신가요?{" "}
             <Link to="/admin/login" className="text-blue-600 underline">
               관리자 로그인
             </Link>

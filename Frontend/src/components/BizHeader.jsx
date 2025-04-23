@@ -2,7 +2,8 @@
 import { Link, useNavigate } from "react-router-dom";
 export default function BizHeader() {
   const logout = () => {
-    /* 토큰 삭제 후 리다이렉트 */
+    localStorage.removeItem("businessToken");
+    navigate("/admin/login");
   };
   return (
     <header>
