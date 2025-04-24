@@ -7,4 +7,11 @@
         INSERT INTO FAQ (ID, QUESTION, ANSWER, CREATED_AT)
         VALUES (#{id}, #{question}, #{answer}, NOW())
     </insert>
+
+    <select id="findAll" resultType="com.cleaning.backend.model.Faq">
+        SELECT id, question, answer, created_at
+        FROM faq
+        ORDER BY created_at DESC
+    </select>
+
 </mapper>
