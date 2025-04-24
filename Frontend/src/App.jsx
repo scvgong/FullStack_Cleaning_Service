@@ -29,6 +29,8 @@ import BusinessQuoteDetail from "./pages/business/BusinessQuoteDetail";
 
 import FaqCreate from "./pages/admin/FaqCreate";
 import FaqList from "./pages/admin/FaqList";
+import FaqEdit from "./pages/admin/FaqEdit";
+import FaqDetail from "./pages/admin/FaqDetail";
 
 function App() {
   return (
@@ -63,6 +65,8 @@ function App() {
           <Route path="register" element={<AdminRegister />} />
           <Route path="faqs" element={<FaqList />} />
           <Route path="faqs/create" element={<FaqCreate />} />
+          <Route path="faqs/:id" element={<FaqDetail />} />
+          <Route path="faqs/:id/edit" element={<FaqEdit />} />
         </Route>
 
         {/* 사업자용 Routes */}

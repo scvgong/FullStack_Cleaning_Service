@@ -18,7 +18,7 @@ const FaqCreate = () => {
         }
 
         try {
-            await createFaq(token, question, answer);
+            await createFaq(question, answer);
             navigate("/admin/faqs");
         } catch (err){
             console.error(err.response?.status, err.response?.data);
