@@ -27,13 +27,6 @@ public class FaqServiceImpl implements FaqService {
 
     @Override
     public List<FaqResponseDto> getFaqList() {
-        return faqMapper.findAll().stream()
-                .map(f -> new FaqResponseDto(
-                        f.getId(),
-                        f.getQuestion(),
-                        f.getAnswer(),
-                        f.getCreateAt()
-                ))
-                .collect(Collectors.toList());
+        return faqMapper.findAll();
     }
 }

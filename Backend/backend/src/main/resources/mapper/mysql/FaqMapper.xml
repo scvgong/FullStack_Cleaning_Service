@@ -8,8 +8,12 @@
         VALUES (#{id}, #{question}, #{answer}, NOW())
     </insert>
 
-    <select id="findAll" resultType="com.cleaning.backend.model.Faq">
-        SELECT id, question, answer, created_at
+    <select id="findAll" resultType="com.cleaning.backend.dto.FaqResponseDto">
+        SELECT
+            id,
+            question,
+            answer,
+            created_at AS createdAt
         FROM faq
         ORDER BY created_at DESC
     </select>
