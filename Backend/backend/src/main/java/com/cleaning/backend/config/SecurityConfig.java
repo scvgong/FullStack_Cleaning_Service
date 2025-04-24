@@ -5,6 +5,7 @@ import com.cleaning.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,11 +41,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/uploads/**").permitAll() // 정적 파일 허용
                         .requestMatchers("/api/admin/auth/**").permitAll() // 관리자 로그인 관련 API 허용
-                        .requestMatchers("/api/admin/faqs").hasRole("ADMIN") // 관리자 전용 FAQ 작성 권한 추가
-                        .requestMatchers("/api/admin/faqs/create").hasRole("ADMIN") // 관리자 전용 FAQ 작성 권한 추가
                         .requestMatchers("/api/business/auth/**").permitAll() // 사업자 로그인 관련 API 허용
                         .requestMatchers("/api/quotes").permitAll() // ✅ 사용자 견적 요청 허용
                         .requestMatchers("/api/business/register").permitAll() // 사업자 회원가입 요청 허용
+                        .requestMatchers("/api/admin/faqs/**").hasRole("ADMIN")
                         .requestMatchers("/api/business/quotes/**").hasRole("BUSINESS") // 사업자 게시판 요청 허용
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 )

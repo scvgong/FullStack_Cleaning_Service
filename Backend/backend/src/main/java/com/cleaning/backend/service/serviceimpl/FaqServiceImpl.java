@@ -29,4 +29,19 @@ public class FaqServiceImpl implements FaqService {
     public List<FaqResponseDto> getFaqList() {
         return faqMapper.findAll();
     }
+
+    @Override
+    public FaqResponseDto getFaq(Long id) {
+        return faqMapper.findById(id);
+    }
+
+    @Override
+    public void updateFaq(Long id, FaqRequestDto dto) {
+        faqMapper.update(id, dto);
+    }
+
+    @Override
+    public void deleteFaq(Long id) {
+        faqMapper.delete(id);
+    }
 }

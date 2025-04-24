@@ -18,4 +18,22 @@
         ORDER BY created_at DESC
     </select>
 
+    <select id="findById" parameterType="long" resultType="com.cleaning.backend.dto.FaqResponseDto">
+        SELECT id, question, answer, created_at
+        FROM faq
+        WHERE id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE faq
+        SET question = #{dto.question},
+        answer   = #{dto.answer}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM faq
+        WHERE id = #{id}
+    </delete>
+
 </mapper>
