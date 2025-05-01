@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- resources/mapper/InquiryMapper.xml -->
+<mapper namespace="com.cleaning.backend.mapper.InquiryMapper">
+    <insert id="insertInquiry">
+        INSERT INTO inquiry (business_id, subject, message, created_at)
+        VALUES (#{businessId}, #{subject}, #{message}, NOW())
+    </insert>
+    <select id="findAll" resultType="com.cleaning.backend.model.Inquiry">
+        SELECT i.id, i.business_id, b.name AS businessName,
+        i.subject, i.message, i.reply, i.created_at, i.replied_at
+        FROM inquiry i
+        JOIN business_user b ON i.business_id = b.id
+        ORDER BY i.created_at DESC
+    </select>
+    <select id="findById" resultType="com.cleaning.backend.model.Inquiry">
+        SELECT * FROM  WHERE id = #{id}
+    </select>
+    <update id="updateReply">
+        UPDATE inquiry
+        SET reply = #{reply}, replied_at = NOW()
+        WHERE id = #{id}
+    </update>
+</mapper>

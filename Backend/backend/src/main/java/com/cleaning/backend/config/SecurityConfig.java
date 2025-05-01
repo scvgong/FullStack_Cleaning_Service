@@ -46,6 +46,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/business/register").permitAll() // 사업자 회원가입 요청 허용
                         .requestMatchers("/api/admin/faqs/**").hasRole("ADMIN")
                         .requestMatchers("/api/business/quotes/**").hasRole("BUSINESS") // 사업자 게시판 요청 허용
+                        .requestMatchers(HttpMethod.POST,   "/api/business/inquiries").permitAll()
+                        .requestMatchers("/api/admin/inquiries/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가
