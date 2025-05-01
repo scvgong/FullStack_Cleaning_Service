@@ -70,3 +70,35 @@ export const deleteFaq = async (id) => {
     { headers: authHeaders() }
   );
 };
+
+
+// Admin: 전체 문의 목록 조회
+export async function fetchAllInquiries() {
+  const token = localStorage.getItem("adminToken");
+  const res = await axios.get(
+    `${BASE_URL}/inquiries`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data; // [{ id, businessId, businessName, subject, status, createdAt }]
+}
+
+// Admin: 문의 상세 및 답변 조회
+export async function fetchInquiryAdminDetail(id) {
+  const token = localStorage.getItem("adminToken");
+  const res = await axios.get(
+    `${BASE_URL}/inquiries/${id}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data; // { id, businessId, businessName, subject, message, status, createdAt, reply, repliedAt }
+}
+
+// Admin: 답변 등록
+export async function createInquiryReply(id, answer) {
+  const token = localStorage.getItem("adminToken");
+  const res = await axios.post(
+    `${BASE_URL}/inquiries/${id}/reply`,
+    { answer },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+}

@@ -26,11 +26,17 @@ import AdminRegister from "./pages/admin/AdminRegister";
 import BusinessDashboard from "./pages/business/BusinessDashboard";
 import BusinessQuoteList from "./pages/business/BusinessQuoteList";
 import BusinessQuoteDetail from "./pages/business/BusinessQuoteDetail";
+import BusinessInquiryList from "./pages/business/BusinessInquiryList";
+import BusinessInquiryDetail from "./pages/business/BusinessInquiryDetail";
+import BusinessInquiryCreate from "./pages/business/BusinessInquiryCreate";
 
 import FaqCreate from "./pages/admin/FaqCreate";
 import FaqList from "./pages/admin/FaqList";
 import FaqEdit from "./pages/admin/FaqEdit";
 import FaqDetail from "./pages/admin/FaqDetail";
+import AdminInquiryList from "./pages/admin/AdminInquiryList";
+import AdminInquiryDetail from "./pages/admin/AdminInquiryDetail";
+
 
 function App() {
   return (
@@ -67,6 +73,8 @@ function App() {
           <Route path="faqs/create" element={<FaqCreate />} />
           <Route path="faqs/:id" element={<FaqDetail />} />
           <Route path="faqs/:id/edit" element={<FaqEdit />} />
+          <Route path="inquiries" element={<AdminInquiryList />} />
+          <Route path="inquiries/:id" element={<AdminInquiryDetail />} />
         </Route>
 
         {/* 사업자용 Routes */}
@@ -76,6 +84,9 @@ function App() {
           <Route path="dashboard" element={<BusinessDashboard />} />
           <Route path="quotes" element={<BusinessQuoteList />} />
           <Route path="quotes/:id" element={<BusinessQuoteDetail />} />
+          <Route path="inquiries" element={<BusinessInquiryList />} />
+          <Route path="inquiries/:id" element={<BusinessInquiryDetail />} />
+          <Route path="inquiries/create" element={<BusinessInquiryCreate />} />
         </Route>
       </Routes>
     </Router>
