@@ -7,5 +7,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface InquiryReplyMapper {
     void insertReply(InquiryReply reply);
-    InquiryReply findInquiryId(@Param("inquiryId") Long id);
+    InquiryReply findByInquiryId(@Param("inquiryId") Long inquiryId);
+    void updateReply(InquiryReply reply);
+    void deleteByInquiryId(@Param("inquiryId") Long inquiryId);
 }

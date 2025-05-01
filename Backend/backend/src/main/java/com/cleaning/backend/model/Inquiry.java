@@ -9,10 +9,12 @@ public class Inquiry {
     private Long id;
     private Long businessId;
     private String businessName; // 조인 정보가 필요하면
+    private String status;
     private String subject;
     private String message;
     private String reply;
     private LocalDateTime createdAt;
     private LocalDateTime repliedAt;
+
 
 }

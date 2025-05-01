@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- resources/mapper/InquiryMapper.xml -->
+<mapper namespace="com.cleaning.backend.mapper.InquiryReplyMapper">
+    <insert id="insertReply" parameterType="com.cleaning.backend.model.InquiryReply">
+        INSERT INTO inquiry_reply (inquiry_id, admin_id, answer)
+        VALUES (#{inquiryId}, #{adminId}, #{answer})
+    </insert>
+
+    <select id="findByInquiryId" parameterType="long" resultType="com.cleaning.backend.model.InquiryReply">
+        SELECT id,
+        inquiry_id   AS inquiryId,
+        admin_id     AS adminId,
+        answer,
+        replied_at   AS repliedAt
+        FROM inquiry_reply
+        WHERE inquiry_id = #{inquiryId}
+    </select>
+
+    <update id="updateReply" parameterType="com.cleaning.backend.model.InquiryReply">
+        UPDATE inquiry_reply
+        SET answer = #{answer},
+        replied_at = CURRENT_TIMESTAMP
+        WHERE inquiry_id = #{inquiryId}
+    </update>
+
+    <delete id="deleteByInquiryId" parameterType="long">
+        DELETE FROM inquiry_reply
+        WHERE inquiry_id = #{inquiryId}
+    </delete>
+</mapper>

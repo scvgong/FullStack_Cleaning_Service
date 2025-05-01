@@ -3,7 +3,9 @@ package com.cleaning.backend.controller;
 import com.cleaning.backend.dto.InquiryReplyDto;
 import com.cleaning.backend.dto.InquiryResponseDto;
 import com.cleaning.backend.service.AdminInquiryService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,24 +18,38 @@ public class AdminInquiryController {
     private final AdminInquiryService service;
 
     @GetMapping
-    public List<InquiryResponseDto> listAll() {
-        return service.listAll();
+    public ResponseEntity<List<InquiryResponseDto>> list() {
+        return ResponseEntity.ok(service.listAllPending());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InquiryResponseDto> getDetail(@PathVariable Long id) {
-        var dto = service.getDetail(id);
-        return dto != null
-                ? ResponseEntity.ok(dto)
-                : ResponseEntity.notFound().build();
+    public ResponseEntity<InquiryResponseDto> detail(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getDetail(id));
+    }
+
+    @PostMapping("/{id}/reply")
+    public ResponseEntity<Void> reply(
+            @PathVariable Long id,
+            @RequestBody InquiryReplyDto dto,
+            Authentication auth
+    ) {
+        Long adminId = ((Claims)auth.getPrincipal()).get("userId", Long.class);
+        service.replyInquiry(id, dto, adminId);
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/{id}/reply")
-    public ResponseEntity<Void> replyToInquiry(
+    public ResponseEntity<Void> updateReply(
             @PathVariable Long id,
             @RequestBody InquiryReplyDto dto
     ) {
-        service.replyToInquiry(id, dto);
+        service.updateReply(id, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}/reply")
+    public ResponseEntity<Void> deleteReply(@PathVariable Long id) {
+        service.deleteReply(id);
         return ResponseEntity.noContent().build();
     }
 }

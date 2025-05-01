@@ -6,7 +6,9 @@ import com.cleaning.backend.dto.InquiryResponseDto;
 import java.util.List;
 
 public interface AdminInquiryService {
-    List<InquiryResponseDto> listAll();
+    List<InquiryResponseDto> listAllPending();
     InquiryResponseDto getDetail(Long id);
-    void replyToInquiry(Long id, InquiryReplyDto dto);
+    void replyInquiry(Long id, InquiryReplyDto replyDto, Long adminId);
+    void updateReply(Long id, InquiryReplyDto replyDto);
+    void deleteReply(Long id);
 }

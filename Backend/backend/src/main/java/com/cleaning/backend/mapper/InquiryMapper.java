@@ -6,12 +6,14 @@ import com.cleaning.backend.model.Inquiry;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Mapper
 public interface InquiryMapper {
-    void insertInquiry(@Param("businessId") Long b, @Param("subject") String s, @Param("message") String m);
-    List<Inquiry> findAll();
+    void insert(InquiryRequestDto req);
+    List<Inquiry> findAllByBusiness(@Param("businessId") Long businessId);
     Inquiry findById(@Param("id") Long id);
-    void updateReply(@Param("id") Long id, @Param("reply") String reply);
+    void updateStatus(@Param("id") Long id, @Param("status") String status);
+    List<Inquiry> findAllPending();
 }

@@ -1,4 +1,8 @@
 package com.cleaning.backend.dto;
 
-public record InquiryReplyDto(String reply) {
+import lombok.Data;
+
+@Data
+public class InquiryReplyDto {
+    private String reply;
 }

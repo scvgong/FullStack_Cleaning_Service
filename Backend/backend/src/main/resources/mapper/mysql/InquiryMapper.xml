@@ -4,23 +4,70 @@
 
 <!-- resources/mapper/InquiryMapper.xml -->
 <mapper namespace="com.cleaning.backend.mapper.InquiryMapper">
-    <insert id="insertInquiry">
-        INSERT INTO inquiry (business_id, subject, message, created_at)
-        VALUES (#{businessId}, #{subject}, #{message}, NOW())
+    <insert id="insert" parameterType="com.cleaning.backend.dto.InquiryRequestDto">
+        INSERT INTO inquiry (business_id, subject, message)
+        VALUES (#{businessId}, #{subject}, #{message})
     </insert>
-    <select id="findAll" resultType="com.cleaning.backend.model.Inquiry">
-        SELECT i.id, i.business_id, b.name AS businessName,
-        i.subject, i.message, i.reply, i.created_at, i.replied_at
+
+    <select id="findAllPending" resultType="com.cleaning.backend.model.Inquiry">
+        SELECT * FROM inquiry
+        WHERE status = 'PENDING'
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 사업자별 목록 조회 -->
+    <select id="findAllByBusiness" resultMap="InquiryResult">
+        SELECT
+        i.id,
+        i.business_id       AS businessId,
+        bu.username         AS businessName,
+        i.subject,
+        i.message,
+        i.status,
+        i.created_at        AS createdAt,
+        r.replied_at        AS repliedAt
         FROM inquiry i
-        JOIN business_user b ON i.business_id = b.id
+        JOIN business_user bu
+        ON i.business_id = bu.id
+        LEFT JOIN inquiry_reply r
+        ON r.inquiry_id = i.id
+        WHERE i.business_id = #{businessId}
         ORDER BY i.created_at DESC
     </select>
+    <!-- 단일 조회 -->
     <select id="findById" resultType="com.cleaning.backend.model.Inquiry">
-        SELECT * FROM  WHERE id = #{id}
+        SELECT
+        i.id,
+        i.business_id       AS businessId,
+        bu.username         AS businessName,
+        i.subject,
+        i.message,
+        i.status,
+        i.created_at        AS createdAt,
+        r.replied_at        AS repliedAt
+        FROM inquiry i
+        JOIN business_user bu
+        ON i.business_id = bu.id
+        LEFT JOIN inquiry_reply r
+        ON r.inquiry_id = i.id
+        WHERE i.id = #{id}
     </select>
-    <update id="updateReply">
+
+    <!-- resultMap 정의도 함께 확인하세요 -->
+    <resultMap id="InquiryResult" type="com.cleaning.backend.model.Inquiry">
+        <id     column="id"           property="id" />
+        <result column="business_id"  property="businessId"/>
+        <result column="business_name" property="businessName"/>
+        <result column="subject"      property="subject"/>
+        <result column="message"      property="message"/>
+        <result column="status"       property="status"/>
+        <result column="createdAt"    property="createdAt"/>
+        <result column="repliedAt"    property="repliedAt"/>
+    </resultMap>
+
+    <update id="updateStatus">
         UPDATE inquiry
-        SET reply = #{reply}, replied_at = NOW()
+        SET status = #{status}
         WHERE id = #{id}
     </update>
 </mapper>
