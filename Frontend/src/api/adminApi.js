@@ -102,3 +102,4 @@ export async function createInquiryReply(id, answer) {
   );
   return res.data;
 }
+

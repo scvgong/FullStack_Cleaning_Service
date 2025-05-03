@@ -10,6 +10,7 @@ export default function AdminHeader() {
       <Link to="/admin/dashboard">대시보드</Link>
       <Link to="/admin/faqs">FAQ 작성</Link>
       <Link to="/admin/quotes">견적관리</Link>
+      <Link to="/admin/inquiries">문의관리</Link>
       <button onClick={logout} className="ml-auto text-red-500">
         로그아웃
       </button>

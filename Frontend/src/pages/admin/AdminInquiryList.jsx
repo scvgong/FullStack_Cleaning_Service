@@ -6,6 +6,8 @@ export default function AdminInquiryList() {
   const [inquiries, setInquiries] = useState([]);
   const navigate = useNavigate();
 
+  console.log('inquiries', inquiries);
+
   useEffect(() => {
     fetchAllInquiries()
       .then(setInquiries)

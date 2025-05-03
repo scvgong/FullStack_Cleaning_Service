@@ -16,6 +16,9 @@ export default function AdminDashboard() {
           <Link to="/admin/register" className="text-blue-600 hover:underline">
             📝 관리자 등록
           </Link>
+          <Link to="/admin/inquiries" className="text-blue-600 hover:underline">
+            📬 문의 관리
+          </Link>
         </div>
       </section>
     </div>
