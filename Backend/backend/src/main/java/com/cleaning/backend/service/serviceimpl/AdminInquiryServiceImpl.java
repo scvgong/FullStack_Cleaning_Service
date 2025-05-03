@@ -37,13 +37,23 @@ public class AdminInquiryServiceImpl implements AdminInquiryService {
 
     @Override
     public void replyInquiry(Long id, InquiryReplyDto replyDto, Long adminId) {
-//        replyMapper.insertReply(new InquiryReply(null, id, adminId, replyDto.getReply(), null));
+        // 1) 답변 삽입
+        InquiryReply reply = new InquiryReply();
+        reply.setInquiryId(id);
+        reply.setAdminId(adminId);
+        reply.setAnswer(replyDto.getReply());
+        replyMapper.insertReply(reply);
+
+        // 2) 문의 상태 변경
         inquiryMapper.updateStatus(id, "ANSWERED");
     }
 
     @Override
     public void updateReply(Long id, InquiryReplyDto replyDto) {
-//        replyMapper.updateReply(new InquiryReply(null, id, /* adminId? */ null, replyDto.getReply(), null));
+        InquiryReply r = new InquiryReply();
+        r.setInquiryId(id);
+        r.setAnswer(replyDto.getReply());
+        replyMapper.updateReply(r);
     }
 
     @Override
@@ -54,7 +64,17 @@ public class AdminInquiryServiceImpl implements AdminInquiryService {
 
     private InquiryResponseDto toDto(Inquiry i, InquiryReply r) {
         InquiryResponseDto dto = new InquiryResponseDto();
-        // set fields...
+        dto.setId(i.getId());
+        dto.setBusinessId(i.getBusinessId());
+        dto.setBusinessName(i.getBusinessName());
+        dto.setSubject(i.getSubject());
+        dto.setMessage(i.getMessage());
+        dto.setStatus(i.getStatus());
+        dto.setCreatedAt(i.getCreatedAt());
+        if (r != null) {
+            dto.setReply(r.getAnswer());
+            dto.setRepliedAt(r.getRepliedAt());
+        }
         return dto;
     }
 }

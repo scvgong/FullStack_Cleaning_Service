@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class InquiryRequestDto{
     private Long businessId;
+    private String businessName;
     private String subject;
     private String message;
 }

@@ -10,9 +10,18 @@
     </insert>
 
     <select id="findAllPending" resultType="com.cleaning.backend.model.Inquiry">
-        SELECT * FROM inquiry
+        SELECT
+            i.id,
+            i.business_id AS businessId,
+            bu.username AS businessName,
+            i.subject,
+            i.message,
+            i.status,
+            i.created_at AS createdAt
+        FROM inquiry i
+        LEFT JOIN business_user bu on i.business_id = bu.id
         WHERE status = 'PENDING'
-        ORDER BY created_at DESC
+        ORDER BY i.created_at DESC
     </select>
 
     <!-- 사업자별 목록 조회 -->

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- resources/mapper/InquiryMapper.xml -->
+<!-- resources/mapper/InquiryReplyMapper.xml -->
 <mapper namespace="com.cleaning.backend.mapper.InquiryReplyMapper">
     <insert id="insertReply" parameterType="com.cleaning.backend.model.InquiryReply">
         INSERT INTO inquiry_reply (inquiry_id, admin_id, answer)
