@@ -16,4 +16,5 @@ public interface InquiryMapper {
     Inquiry findById(@Param("id") Long id);
     void updateStatus(@Param("id") Long id, @Param("status") String status);
     List<Inquiry> findAllPending();
+    List<Inquiry> findAllAnswered(); // 답변 완료된 문의
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchAllInquiries } from "../../api/adminApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AdminInquiryList() {
   const [inquiries, setInquiries] = useState([]);
@@ -33,6 +33,11 @@ export default function AdminInquiryList() {
           </li>
         ))}
       </ul>
+      <div>
+        <Link to="/admin/inquiries/completed" className="mt-4 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+          답변 완료된 문의 보기
+          </Link>
+      </div>
     </div>
   )
 }

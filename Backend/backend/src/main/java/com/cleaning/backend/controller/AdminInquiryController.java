@@ -52,4 +52,9 @@ public class AdminInquiryController {
         service.deleteReply(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/completed")
+    public ResponseEntity<List<InquiryResponseDto>> listAnswered() {
+        return ResponseEntity.ok(service.listAllAnswered());
+    }
 }

@@ -62,6 +62,15 @@ public class AdminInquiryServiceImpl implements AdminInquiryService {
         inquiryMapper.updateStatus(id, "PENDING");
     }
 
+    @Override
+    public List<InquiryResponseDto> listAllAnswered() {
+        return inquiryMapper.findAllAnswered().stream()
+                .map(i -> {
+                    InquiryReply r = replyMapper.findByInquiryId(i.getId());
+                    return toDto(i,r);
+                }).collect(Collectors.toList());
+    }
+
     private InquiryResponseDto toDto(Inquiry i, InquiryReply r) {
         InquiryResponseDto dto = new InquiryResponseDto();
         dto.setId(i.getId());

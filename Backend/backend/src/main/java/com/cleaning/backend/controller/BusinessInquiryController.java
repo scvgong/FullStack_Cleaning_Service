@@ -19,37 +19,32 @@ import java.util.List;
 public class BusinessInquiryController {
     private final BusinessInquiryService service;
 
+    // 문의 생성
     @PostMapping
-    public ResponseEntity<Void> create(
-            @RequestBody InquiryRequestDto dto,
-            Authentication auth
-    ) {
+    public ResponseEntity<Void> create(@RequestBody InquiryRequestDto dto, Authentication auth) {
         Long businessId = ((Claims)auth.getPrincipal()).get("userId", Long.class);
         dto.setBusinessId(businessId);
         service.createInquiry(dto);
         return ResponseEntity.status(201).build();
     }
 
+    // 문의 목록
     @GetMapping
     public ResponseEntity<List<InquiryResponseDto>> list(Authentication auth) {
         Long businessId = ((Claims)auth.getPrincipal()).get("userId", Long.class);
         return ResponseEntity.ok(service.listMyInquiries(businessId));
     }
 
+    // 상세 문의
     @GetMapping("/{id}")
-    public ResponseEntity<InquiryResponseDto> detail(
-            @PathVariable Long id,
-            Authentication auth
-    ) throws AccessDeniedException {
+    public ResponseEntity<InquiryResponseDto> detail(@PathVariable Long id, Authentication auth) throws AccessDeniedException {
         Long businessId = ((Claims)auth.getPrincipal()).get("userId", Long.class);
         return ResponseEntity.ok(service.getDetail(id, businessId));
     }
 
+    // 문의 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(
-            @PathVariable Long id,
-            Authentication auth
-    ) throws AccessDeniedException {
+    public ResponseEntity<Void> delete(@PathVariable Long id, Authentication auth) throws AccessDeniedException {
         Long businessId = ((Claims)auth.getPrincipal()).get("userId", Long.class);
         service.deleteInquiry(id, businessId);
         return ResponseEntity.noContent().build();

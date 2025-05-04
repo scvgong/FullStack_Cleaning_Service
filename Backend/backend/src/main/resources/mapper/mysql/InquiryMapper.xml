@@ -74,6 +74,24 @@
         <result column="repliedAt"    property="repliedAt"/>
     </resultMap>
 
+    <select id="findAllAnswered" resultType="com.cleaning.backend.model.Inquiry">
+        SELECT
+        i.id,
+        i.business_id   AS businessId,
+        bu.username     AS businessName,
+        i.subject,
+        i.message,
+        i.status,
+        i.created_at    AS createdAt,
+        r.answer        AS reply,
+        r.replied_at    AS repliedAt
+        FROM inquiry i
+        JOIN business_user bu ON i.business_id = bu.id
+        JOIN inquiry_reply r ON r.inquiry_id = i.id
+        WHERE i.status = 'ANSWERED'
+        ORDER BY r.replied_at DESC
+    </select>
+
     <update id="updateStatus">
         UPDATE inquiry
         SET status = #{status}

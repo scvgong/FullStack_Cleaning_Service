@@ -36,6 +36,7 @@ import FaqEdit from "./pages/admin/FaqEdit";
 import FaqDetail from "./pages/admin/FaqDetail";
 import AdminInquiryList from "./pages/admin/AdminInquiryList";
 import AdminInquiryDetail from "./pages/admin/AdminInquiryDetail";
+import AdminInquiryCompletedList from "./pages/admin/AdminInquiryCompletedList";
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
           <Route path="faqs/:id/edit" element={<FaqEdit />} />
           <Route path="inquiries" element={<AdminInquiryList />} />
           <Route path="inquiries/:id" element={<AdminInquiryDetail />} />
+          <Route path="inquiries/completed" element={<AdminInquiryCompletedList />} />  
         </Route>
 
         {/* 사업자용 Routes */}

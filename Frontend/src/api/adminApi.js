@@ -103,3 +103,12 @@ export async function createInquiryReply(id, answer) {
   return res.data;
 }
 
+// 관리자: 답변 완료된 문의 조회
+export async function fetchCompletedInquiries() {
+  const token = localStorage.getItem("adminToken");
+  const res = await axios.get(
+    `${BASE_URL}/inquiries/completed`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;  // [{ id, businessId, businessName, subject, status, createdAt, reply, repliedAt }, …]
+}

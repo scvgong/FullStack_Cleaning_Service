@@ -11,4 +11,5 @@ public interface AdminInquiryService {
     void replyInquiry(Long id, InquiryReplyDto replyDto, Long adminId);
     void updateReply(Long id, InquiryReplyDto replyDto);
     void deleteReply(Long id);
+    List<InquiryResponseDto> listAllAnswered();
 }
