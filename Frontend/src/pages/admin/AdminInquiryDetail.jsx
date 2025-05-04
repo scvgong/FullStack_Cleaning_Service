@@ -29,6 +29,13 @@ export default function AdminInquiryDetail() {
       <h2 className="text-xl font-bold mb-2">{data.subject}</h2>
       <p className="mb-4 whitespace-pre-wrap">{data.message}</p>
       <p className="mb-2 text-gray-600">사업자: {data.businessName}</p>
+      {data.reply && ( 
+        <div className="mb-6">
+          <p className="font-semibold text-gray-700 mb-1">기존 답변:</p>
+          <div className="p-4 bg-blue-50 rounded whitespace-pre-wrap">
+            {data.reply}
+          </div>
+        </div>)}
       <form onSubmit={handleSubmit} className="space-y-4">
         <textarea
           className="w-full p-2 border rounded h-32"
