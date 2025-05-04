@@ -29,7 +29,7 @@ public class AdminAuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
 
-        String token = jwtUtil.generateToken(user);
+        String token = jwtUtil.generateToken(user.getUsername(), user.getRole(), user.getId(), null);
         return ResponseEntity.ok(Map.of("token", token));
     }
 

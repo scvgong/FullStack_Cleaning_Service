@@ -41,7 +41,7 @@ public class AdminInquiryServiceImpl implements AdminInquiryService {
         InquiryReply reply = new InquiryReply();
         reply.setInquiryId(id);
         reply.setAdminId(adminId);
-        reply.setAnswer(replyDto.getReply());
+        reply.setAnswer(replyDto.getAnswer());
         replyMapper.insertReply(reply);
 
         // 2) 문의 상태 변경
@@ -52,7 +52,7 @@ public class AdminInquiryServiceImpl implements AdminInquiryService {
     public void updateReply(Long id, InquiryReplyDto replyDto) {
         InquiryReply r = new InquiryReply();
         r.setInquiryId(id);
-        r.setAnswer(replyDto.getReply());
+        r.setAnswer(replyDto.getAnswer());
         replyMapper.updateReply(r);
     }
 

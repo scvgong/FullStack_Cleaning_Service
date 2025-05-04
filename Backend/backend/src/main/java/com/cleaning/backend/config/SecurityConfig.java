@@ -50,7 +50,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/business/inquiries/**").hasRole("BUSINESS")
                         .requestMatchers("/api/business/inquiries/**").hasRole("BUSINESS")
                         .requestMatchers("/api/business/inquiries/**").hasRole("BUSINESS")
-                        .requestMatchers("/api/admin/inquiries/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,    "/api/admin/inquiries/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,   "/api/admin/inquiries/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,    "/api/admin/inquiries/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/admin/inquiries/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가
