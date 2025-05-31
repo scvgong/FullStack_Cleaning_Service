@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- src/main/resources/mapper/FaqMapper.xml -->
+<mapper namespace="com.cleaning.backend.mapper.FaqMapper">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO FAQ (ID, QUESTION, ANSWER, CREATED_AT)
+        VALUES (FAQ_SEQ.NEXTVAL, #{question}, #{answer}, SYSDATE)
+    </insert>
+    <resultMap id="FaqResult" type="com.cleaning.backend.model.Faq">
+        <id column="id" property="id"/>
+        <result column="question" property="question"/>
+        <result column="answer"   property="answer"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="FaqResult">
+        SELECT id, question, answer, created_at
+        FROM faq
+        ORDER BY created_at DESC
+    </select>
+</mapper>

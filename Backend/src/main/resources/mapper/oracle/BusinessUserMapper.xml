@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cleaning.backend.mapper.BusinessUserMapper">
+    <!-- 사업자 회원가입 -->
+    <insert id="insertBusinessUser">
+        INSERT INTO BUSINESS_USER (
+        ID, USERNAME, PASSWORD, NAME, BUSINESS_NO,
+        PHONE, ALT_PHONE, BIZ_DOC_PATH, CATEGORY, CREATED_AT
+        ) VALUES (
+        BUSINESS_USER_SEQ.NEXTVAL,
+        #{dto.username}, #{dto.password}, #{dto.name}, #{dto.businessNo},
+        #{dto.phone}, #{dto.altPhone, jdbcType=VARCHAR}, #{filePath, jdbcType=VARCHAR}, #{dto.category}, SYSTIMESTAMP
+        )
+    </insert>
+
+    <!-- 사업자 회원 찾기 -->
+    <select id="findByUsername" resultType="com.cleaning.backend.model.BusinessUser">
+        SELECT * FROM BUSINESS_USER
+        WHERE USERNAME = #{username}
+    </select>
+
+</mapper>

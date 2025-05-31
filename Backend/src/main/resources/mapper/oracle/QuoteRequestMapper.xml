@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cleaning.backend.mapper.QuoteRequestMapper">
+
+    <insert id="insertQuote" parameterType="com.cleaning.backend.model.QuoteRequest" useGeneratedKeys="true">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT QUOTE_REQUEST_SEQ_MY.NEXTVAL FROM dual
+        </selectKey>
+        INSERT INTO quote_request (
+        id, service_type, space_type, area,
+        name, phone, email, location, message
+        )
+        VALUES (
+        #{id}, #{serviceType}, #{spaceType}, #{area},
+        #{name}, #{phone}, #{email}, #{location}, #{message}
+        )
+    </insert>
+
+    <insert id="insertQuoteImage">
+        INSERT INTO QUOTE_IMAGE (ID, QUOTE_REQUEST_ID, FILE_PATH)
+        VALUES (QUOTE_IMAGE_SEQ.NEXTVAL, #{quoteRequestId}, #{filePath})
+    </insert>
+
+
+    <select id="findById" resultType="com.cleaning.backend.model.QuoteRequest" parameterType="long">
+        SELECT * FROM quote_request WHERE id = #{id}
+    </select>
+
+    <select id="getAllQuotes" resultType="com.cleaning.backend.model.QuoteRequest">
+        SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
+    </select>
+
+    <select id="findQuoteWithImagesById" parameterType="long" resultMap="quoteWithImagesMap">
+        SELECT
+        qr.ID as qr_id,
+        qr.SERVICE_TYPE,
+        qr.SPACE_TYPE,
+        qr.AREA,
+        qr.NAME,
+        qr.PHONE,
+        qr.EMAIL,
+        qr.LOCATION,
+        qr.MESSAGE,
+        qi.ID as qi_id,
+        qi.FILE_PATH
+        FROM QUOTE_REQUEST qr
+        LEFT JOIN QUOTE_IMAGES qi ON qr.ID = qi.QUOTE_ID
+        WHERE qr.ID = #{id}
+    </select>
+
+    <resultMap id="quoteWithImagesMap" type="com.cleaning.backend.model.QuoteRequest">
+        <id property="id" column="qr_id" />
+        <result property="serviceType" column="SERVICE_TYPE" />
+        <result property="spaceType" column="SPACE_TYPE" />
+        <result property="area" column="AREA" />
+        <result property="name" column="NAME" />
+        <result property="phone" column="PHONE" />
+        <result property="email" column="EMAIL" />
+        <result property="location" column="LOCATION" />
+        <result property="message" column="MESSAGE" />
+        <collection property="images"
+                    ofType="com.cleaning.backend.model.QuoteImage"
+                    javaType="java.util.List">
+            <id property="id" column="qi_id" />
+            <result property="filePath" column="FILE_PATH" />
+        </collection>
+    </resultMap>
+
+    <delete id="deleteQuoteById" parameterType="long">
+        DELETE FROM QUOTE_REQUEST WHERE ID = #{id}
+    </delete>
+
+    <update id="updateQuote" parameterType="com.cleaning.backend.model.QuoteRequest">
+        UPDATE QUOTE_REQUEST
+        SET
+        ADMIN_REPLY = #{adminReply},
+        STATUS = #{status}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="getQuotesPaged" resultType="com.cleaning.backend.model.QuoteRequest">
+        SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <select id="getQuotesWithPagination" resultType="com.cleaning.backend.model.QuoteRequest">
+        SELECT * FROM (
+        SELECT ROWNUM AS rn, inner_query.*
+        FROM (
+        SELECT * FROM QUOTE_REQUEST ORDER BY ID DESC
+        ) inner_query
+        WHERE <![CDATA[ ROWNUM <= #{offset} + #{pageSize} ]]>
+        )
+        WHERE rn > #{offset}
+    </select>
+
+    <select id="getTotalQuoteCount" resultType="int">
+        SELECT COUNT(*) FROM QUOTE_REQUEST
+    </select>
+</mapper>
