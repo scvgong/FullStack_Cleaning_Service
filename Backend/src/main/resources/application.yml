@@ -15,7 +15,7 @@ spring:
       force: true
       charset: UTF-8
   profiles:
-    active: ${ACTIVE_PROFILE:mysql}  # 기본값은 mysql
+    active: ${ACTIVE_PROFILE:local}  # 기본값은 local 용
   mvc:
     hiddenmethod:
           filter:
