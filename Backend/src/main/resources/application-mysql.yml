@@ -4,9 +4,9 @@ spring:
       on-profile: mysql
 
   datasource:
-    url: jdbc:mysql://localhost:3306/cleaning_service
-    username: root
-    password: root
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:cleaning_db}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USER:clean_user}
+    password: ${DB_PASSWORD:cleanpass}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
