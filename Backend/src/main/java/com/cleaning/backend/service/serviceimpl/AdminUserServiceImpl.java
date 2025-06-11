@@ -52,4 +52,9 @@ public class AdminUserServiceImpl implements AdminUserService {
 
         adminUserMapper.updateAdminUser(user);
     }
+
+    @Override
+    public List<AdminUser> getAllAdmins() {
+        return adminUserMapper.findAllAdmins();
+    }
 }

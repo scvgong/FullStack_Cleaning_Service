@@ -13,4 +13,5 @@ public interface AdminUserMapper {
     List<AdminUser> findPendingAdmins();
     AdminUser findById(Long id);
     void updateAdminUser(AdminUser user);
+    List<AdminUser> findAllAdmins();
 }

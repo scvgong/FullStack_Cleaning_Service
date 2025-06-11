@@ -30,4 +30,10 @@
         SET ROLE = #{role}, STATUS = #{status}
         WHERE ID = #{id}
     </update>
+
+    <select id="findAllAdmins" resultType="com.cleaning.backend.model.AdminUser">
+        SELECT *
+        FROM ADMIN_USER
+        ORDER BY created_at DESC
+    </select>
 </mapper>

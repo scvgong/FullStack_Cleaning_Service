@@ -30,4 +30,9 @@ public class AdminUserController {
         adminUserService.approveAdminUser(id, dto.getRole());
         return ResponseEntity.ok("승인완료");
     }
+
+    @GetMapping
+    public ResponseEntity<?> getAllAdmins() {
+        return ResponseEntity.ok(adminUserService.getAllAdmins());
+    }
 }
