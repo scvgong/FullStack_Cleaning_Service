@@ -13,4 +13,11 @@
         INSERT INTO ADMIN_USER (ID, USERNAME, PASSWORD, NAME, ROLE, STATUS ,CREATED_AT)
         VALUES (#{id}, #{username}, #{password}, #{name}, #{role}, #{status}, NOW())
     </insert>
+
+    <select id="findPendingAdmins" resultType="com.cleaning.backend.model.AdminUser">
+        SELECT *
+        FROM admin_user
+        WHERE status = 'PENDING'
+        ORDER BY created_at DESC
+    </select>
 </mapper>

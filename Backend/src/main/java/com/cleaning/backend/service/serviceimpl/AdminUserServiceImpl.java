@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +33,10 @@ public class AdminUserServiceImpl implements AdminUserService {
         user.setCreatedAt(new Date());
 
         adminUserMapper.insertAdminUser(user);
+    }
+
+    @Override
+    public List<AdminUser> getPendingAdmins() {
+        return adminUserMapper.findPendingAdmins();
     }
 }
