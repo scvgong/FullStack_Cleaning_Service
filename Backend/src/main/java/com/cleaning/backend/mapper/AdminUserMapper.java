@@ -14,4 +14,6 @@ public interface AdminUserMapper {
     AdminUser findById(Long id);
     void updateAdminUser(AdminUser user);
     List<AdminUser> findAllAdmins();
+    void updateAdminUserRole(@Param("id") Long id, @Param("role") String role);
+
 }

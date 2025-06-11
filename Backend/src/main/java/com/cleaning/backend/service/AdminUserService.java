@@ -10,4 +10,6 @@ public interface AdminUserService {
     List<AdminUser> getPendingAdmins();
     void approveAdminUser(Long id, String role);
     List<AdminUser> getAllAdmins();
+    void updateRole(Long id, String role);
+
 }

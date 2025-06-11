@@ -2,6 +2,7 @@ package com.cleaning.backend.controller;
 
 import com.cleaning.backend.dto.AdminUserApproveDto;
 import com.cleaning.backend.dto.AdminUserRegisterDto;
+import com.cleaning.backend.dto.AdminUserRoleUpdateDto;
 import com.cleaning.backend.service.AdminUserService;
 import com.cleaning.backend.service.serviceimpl.AdminUserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,11 @@ public class AdminUserController {
     @GetMapping
     public ResponseEntity<?> getAllAdmins() {
         return ResponseEntity.ok(adminUserService.getAllAdmins());
+    }
+
+    @PutMapping("/{id}/role")
+    public ResponseEntity<?> updateAdminRole(@PathVariable Long id, @RequestBody AdminUserRoleUpdateDto dto) {
+        adminUserService.updateRole(id, dto.getRole());
+        return ResponseEntity.ok("역할이 변경되었습니다.");
     }
 }

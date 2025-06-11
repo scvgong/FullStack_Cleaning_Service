@@ -36,4 +36,10 @@
         FROM ADMIN_USER
         ORDER BY created_at DESC
     </select>
+
+    <update id="updateAdminUserRole">
+        UPDATE ADMIN_USER
+        SET ROLE = #{role}
+        WHERE ID = #{id}
+    </update>
 </mapper>

@@ -57,4 +57,14 @@ public class AdminUserServiceImpl implements AdminUserService {
     public List<AdminUser> getAllAdmins() {
         return adminUserMapper.findAllAdmins();
     }
+
+    @Override
+    public void updateRole(Long id, String role) {
+        AdminUser user = adminUserMapper.findById(id);
+        if (user == null) {
+            throw new IllegalArgumentException("존재하지 않는 관리자입니다.");
+        }
+        user.setRole(role);
+        adminUserMapper.updateAdminUserRole(id, role);
+    }
 }
