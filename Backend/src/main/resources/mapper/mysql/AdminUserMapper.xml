@@ -20,4 +20,14 @@
         WHERE status = 'PENDING'
         ORDER BY created_at DESC
     </select>
+
+    <select id="findById" resultType="com.cleaning.backend.model.AdminUser">
+        SELECT * FROM ADMIN_USER WHERE ID = #{id}
+    </select>
+
+    <update id="updateAdminUser" parameterType="com.cleaning.backend.model.AdminUser">
+        UPDATE ADMIN_USER
+        SET ROLE = #{role}, STATUS = #{status}
+        WHERE ID = #{id}
+    </update>
 </mapper>

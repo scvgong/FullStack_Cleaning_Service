@@ -39,4 +39,17 @@ public class AdminUserServiceImpl implements AdminUserService {
     public List<AdminUser> getPendingAdmins() {
         return adminUserMapper.findPendingAdmins();
     }
+
+    @Override
+    public void approveAdminUser(Long id, String role) {
+        AdminUser user = adminUserMapper.findById(id);
+        if (user == null) {
+            throw new IllegalArgumentException("존재하지 않는 관리자입니다.");
+        }
+
+        user.setRole(role);
+        user.setStatus("APPROVED");
+
+        adminUserMapper.updateAdminUser(user);
+    }
 }

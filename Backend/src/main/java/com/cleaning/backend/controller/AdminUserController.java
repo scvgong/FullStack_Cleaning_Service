@@ -1,5 +1,6 @@
 package com.cleaning.backend.controller;
 
+import com.cleaning.backend.dto.AdminUserApproveDto;
 import com.cleaning.backend.dto.AdminUserRegisterDto;
 import com.cleaning.backend.service.AdminUserService;
 import com.cleaning.backend.service.serviceimpl.AdminUserServiceImpl;
@@ -22,5 +23,11 @@ public class AdminUserController {
     @GetMapping("/pending")
     public ResponseEntity<?> getPendingAdmins() {
         return ResponseEntity.ok(adminUserService.getPendingAdmins());
+    }
+
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<?> approveAdminUser(@PathVariable Long id, @RequestBody AdminUserApproveDto dto){
+        adminUserService.approveAdminUser(id, dto.getRole());
+        return ResponseEntity.ok("승인완료");
     }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface AdminUserService {
     void register(AdminUserRegisterDto dto);
     List<AdminUser> getPendingAdmins();
+    void approveAdminUser(Long id, String role);
 }

@@ -11,4 +11,6 @@ public interface AdminUserMapper {
     AdminUser findByUsername(@Param("username") String name);
     void insertAdminUser(AdminUser user);
     List<AdminUser> findPendingAdmins();
+    AdminUser findById(Long id);
+    void updateAdminUser(AdminUser user);
 }
