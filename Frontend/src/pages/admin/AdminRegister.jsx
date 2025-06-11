@@ -1,158 +1,106 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AdminRegister = () => {
-  const navigate = useNavigate();
   const [form, setForm] = useState({
     username: "",
     password: "",
+    confirmPassword: "",
     name: "",
-    role: "BUSINESS",
-    category: "",
-    phone: "",
-    mobile: "",
-    businessNo: "",
   });
 
-  const [certFile, setCertFile] = useState(null);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e) => {
-    setCertFile(e.target.files[0]);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.phone && !form.mobile) {
-      setError("연락처 또는 휴대폰 번호 중 하나는 입력해야 합니다.");
+
+    // 유효성 검사
+    if (!form.username || !form.password || !form.confirmPassword || !form.name) {
+      setError("모든 항목을 입력해주세요.");
       return;
     }
 
-    if (!form.businessNo.match(/^\d+$/)) {
-      setError("사업자 번호는 숫자만 입력 가능합니다.");
+    if (form.password !== form.confirmPassword) {
+      setError("비밀번호가 일치하지 않습니다.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append(
-      "data",
-      new Blob([JSON.stringify(form)], { type: "application/json" })
-    );
-    if (certFile) {
-      formData.append("certFile", certFile);
-    }
-    try {
-      await axios.post(
-        "http://localhost:8080/api/business/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      alert("회원가입이 완료되었습니다!");
-      navigate("/admin/login");
-    } catch (err) {
-      console.error(err);
-      setError("회원가입에 실패했습니다.");
-    }
+    setError("");
+    console.log("전송할 데이터:", {
+      username: form.username,
+      password: form.password,
+      name: form.name,
+    });
+
+    // TODO: 백엔드 API 연동 예정
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow">
-      <h2 className="text-xl font-bold mb-4">사업자 회원가입</h2>
+    <div className="max-w-md mx-auto p-6 bg-white rounded shadow mt-10">
+      <h2 className="text-xl font-bold mb-4 text-center">관리자 계정 등록</h2>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
+          type="text"
+          name="name"
+          placeholder="이름"
+          value={form.name}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        />
+
+        <input
+          type="text"
           name="username"
           placeholder="아이디"
           value={form.username}
           onChange={handleChange}
-          required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border p-2 rounded"
         />
+
         <input
-          name="password"
           type="password"
+          name="password"
           placeholder="비밀번호"
           value={form.password}
           onChange={handleChange}
-          required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border p-2 rounded"
         />
-        <input
-          name="name"
-          placeholder="이름/상호명"
-          value={form.name}
-          onChange={handleChange}
-          required
-          className="w-full border px-3 py-2 rounded"
-        />
-        <input
-          name="businessNo"
-          placeholder="사업자 번호 (숫자만)"
-          value={form.businessNo}
-          onChange={handleChange}
-          required
-          className="w-full border px-3 py-2 rounded"
-        />
-        <div>
-          <label className="block mb-1 text-sm font-medium">
-            사업자 등록증 업로드
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="w-full"
-          />
-        </div>
-        <input
-          name="phone"
-          placeholder="사업장 연락처 (예: 02-1234-5678)"
-          value={form.phone}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-        />
-        <input
-          name="mobile"
-          placeholder="휴대폰 번호 (예: 010-1234-5678)"
-          value={form.mobile}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-        />
-        <select
-          name="category"
-          value={form.category}
-          onChange={handleChange}
-          required
-          className="w-full border px-3 py-2 rounded"
-        >
-          <option value="">서비스 유형 선택</option>
-          <option value="입주청소">입주청소</option>
-          <option value="인테리어청소">인테리어청소</option>
-          <option value="준공청소">준공청소</option>
-          <option value="카펫청소">카펫청소</option>
-          <option value="외벽청소">외벽청소</option>
-        </select>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="비밀번호 확인"
+          value={form.confirmPassword}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        />
+
+        {error && <p className="text-red-600 text-sm">{error}</p>}
 
         <button
           type="submit"
-          className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
-          가입하기
+          관리자 등록
+        </button>
+
+        {/* 로그인 페이지 돌아가기 */}
+         <button
+          type="button"
+          onClick={() => navigate("/admin/login")}
+          className="w-full mt-2 border border-gray-300 py-2 rounded hover:bg-gray-100 transition"
+        >
+          로그인으로 돌아가기
         </button>
       </form>
     </div>
   );
-};
+}
 
 export default AdminRegister;

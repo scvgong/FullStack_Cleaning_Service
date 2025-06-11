@@ -95,16 +95,16 @@ const AuthLogin = () => {
       <p className="mt-4 text-center text-sm">
         {role === "ADMIN" ? (
           <>
-            사업자이신가요?{" "}
+            관리자 이신가요?{" "}
             <Link to="/admin/register" className="text-blue-600 underline">
               회원가입
             </Link>
           </>
         ) : (
           <>
-            관리자이신가요?{" "}
-            <Link to="/admin/login" className="text-blue-600 underline">
-              관리자 로그인
+            사업자 이신가요?{" "}
+            <Link to="/business/register" className="text-blue-600 underline">
+              사업자 회원가입
             </Link>
           </>
         )}
