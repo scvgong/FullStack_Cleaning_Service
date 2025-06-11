@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AdminRegister = () => {
   const [form, setForm] = useState({
@@ -11,12 +12,13 @@ const AdminRegister = () => {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // 유효성 검사
@@ -31,11 +33,24 @@ const AdminRegister = () => {
     }
 
     setError("");
-    console.log("전송할 데이터:", {
-      username: form.username,
-      password: form.password,
-      name: form.name,
-    });
+
+    try {
+      const response = await axios.post("http://localhost:8080/api/admin/users", {
+        username: form.username,
+        password: form.password,
+        name: form.name,
+      });
+
+      setSuccess(response.data); // 예: "가입 신청 완료. 승인 대기 중입니다."
+      setForm({ username: "", password: "", confirmPassword: "", name: "" });
+
+      // 2초 후 로그인 페이지로 이동
+      setTimeout(() => navigate("/admin/login"), 2000);
+    } catch (err) {
+      setError(
+        err.response?.data || "회원가입 요청 중 오류가 발생했습니다."
+      );
+    }
 
     // TODO: 백엔드 API 연동 예정
   };
@@ -82,6 +97,7 @@ const AdminRegister = () => {
         />
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
+        {success && <p className="text-green-600 text-sm">{success}</p>}
 
         <button
           type="submit"
