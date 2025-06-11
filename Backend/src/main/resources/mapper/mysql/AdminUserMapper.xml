@@ -9,8 +9,8 @@
         WHERE USERNAME = #{username}
     </select>
 
-    <insert id="insertAdminUser">
-        INSERT INTO ADMIN_USER (ID, USERNAME, PASSWORD, NAME, ROLE, CREATED_AT)
-        VALUES (#{id}, #{username}, #{password}, #{name}, #{role}, NOW())
+    <insert id="insertAdminUser" parameterType="com.cleaning.backend.model.AdminUser">
+        INSERT INTO ADMIN_USER (ID, USERNAME, PASSWORD, NAME, ROLE, STATUS ,CREATED_AT)
+        VALUES (#{id}, #{username}, #{password}, #{name}, #{role}, #{status}, NOW())
     </insert>
 </mapper>

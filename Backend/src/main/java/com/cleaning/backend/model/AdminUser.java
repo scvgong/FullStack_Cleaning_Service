@@ -12,4 +12,6 @@ public class AdminUser {
     private String name;
     private String role;
     private Date createdAt;
+    private String status;
+
 }
