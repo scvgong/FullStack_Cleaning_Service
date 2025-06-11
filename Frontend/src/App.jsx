@@ -22,6 +22,7 @@ import Gallery from "./pages/Gallery";
 
 import AuthLogin from "./pages/admin/AuthLogin";
 import AdminRegister from "./pages/admin/AdminRegister";
+import BusinessRegister from "./pages/business/BusinessRegister";
 
 import BusinessDashboard from "./pages/business/BusinessDashboard";
 import BusinessQuoteList from "./pages/business/BusinessQuoteList";
@@ -64,12 +65,12 @@ function App() {
 
         {/* 관리자용용 Routes */}
         <Route path="admin" element={<AdminLayout />}>
+          <Route path="register" element={<AdminRegister />}/>
           <Route index element={<AdminDashboard />} />
           <Route path="login" element={<AuthLogin />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="quotes" element={<AdminQuoteList />} />
           <Route path="quotes/:id" element={<AdminQuoteDetail />} />
-          <Route path="register" element={<AdminRegister />} />
           <Route path="faqs" element={<FaqList />} />
           <Route path="faqs/create" element={<FaqCreate />} />
           <Route path="faqs/:id" element={<FaqDetail />} />
@@ -81,6 +82,7 @@ function App() {
 
         {/* 사업자용 Routes */}
         <Route path="business" element={<BizLayout />}>
+          <Route path="register" element={<BusinessRegister />} />
           <Route path="login" element={<AuthLogin />} />
           <Route path="/business/login" element={<AuthLogin />} />
           <Route path="dashboard" element={<BusinessDashboard />} />
