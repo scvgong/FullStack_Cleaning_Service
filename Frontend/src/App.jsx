@@ -10,6 +10,8 @@ import BizLayout from "./layouts/BizLayout";
 import AdminQuoteList from "./pages/admin/AdminQuoteList";
 import AdminQuoteDetail from "./pages/admin/AdminQuoteDetail";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUserPendingPage from "./pages/admin/AdminUserPendingPage";
+import AdminUserListPage from "./pages/admin/AdminUserListPage";
 
 // 추가된 페이지 컴포넌트
 import MoveInCleaning from "./pages/cleaning/MoveInCleaning";
@@ -77,7 +79,9 @@ function App() {
           <Route path="faqs/:id/edit" element={<FaqEdit />} />
           <Route path="inquiries" element={<AdminInquiryList />} />
           <Route path="inquiries/:id" element={<AdminInquiryDetail />} />
-          <Route path="inquiries/completed" element={<AdminInquiryCompletedList />} />  
+          <Route path="inquiries/completed" element={<AdminInquiryCompletedList />} />
+          <Route path="users/pending" element={<AdminUserPendingPage/>} />  
+          <Route path="users" element={<AdminUserListPage />} />
         </Route>
 
         {/* 사업자용 Routes */}
