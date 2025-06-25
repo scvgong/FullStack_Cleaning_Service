@@ -5,16 +5,55 @@ import { Link } from "react-router-dom";
 const BusinessQuoteList = () => {
   const [quotes, setQuotes] = useState([]);
   const token = localStorage.getItem("businessToken");
+  const [keyword, setKeyword] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const fetchQuotes = async () => {
+    if (!token) return;
+    setLoading(true);
+    try {
+      const data = await getBusinessQuotes(token, keyword); // ✅ keyword 전달
+      setQuotes(data);
+    } catch (err) {
+      console.error("견적 목록 조회 실패:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!token) return;
-    getBusinessQuotes(token).then(setQuotes).catch(console.error);
+    fetchQuotes(); // 최초 로딩
   }, [token]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    fetchQuotes(); // 검색 시 재요청
+  };
 
   return (
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">견적 요청 목록</h2>
-      {quotes.length === 0 ? (
+
+      {/* 🔍 검색폼 */}
+      <form onSubmit={handleSearch} className="mb-4 flex gap-2">
+        <input
+          type="text"
+          placeholder="이름, 전화번호, 이메일 검색"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          className="border px-3 py-2 rounded w-64"
+        />
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          검색
+        </button>
+      </form>
+
+      {loading ? (
+        <p>로딩 중...</p>
+      ) : quotes.length === 0 ? (
         <p>조회된 요청이 없습니다.</p>
       ) : (
         <ul className="space-y-4">
@@ -45,7 +84,6 @@ const BusinessQuoteList = () => {
                   ))}
                 </div>
               </div>
-              {/* 상세보기 버튼 */}
               <div className="mt-3">
                 <Link
                   to={`/business/quotes/${q.id}`}

@@ -40,6 +40,7 @@ const AdminUserListPage = () => {
       alert("역할이 변경되었습니다.");
       fetchUsers(); // 변경 후 새로고침
     } catch (err) {
+      console.error("역할 변경 실패:", err);
       alert("역할 변경 실패");
     }
   };

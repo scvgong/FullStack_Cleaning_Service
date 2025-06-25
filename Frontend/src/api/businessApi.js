@@ -13,11 +13,14 @@ export async function loginBusiness(username, password) {
   return res.data.token;
 }
 
-export async function getBusinessQuotes(token) {
+export async function getBusinessQuotes(token, keyword = "") {
   const res = await axios.get(`${BUSINESS_BASE_URL}/quotes`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    params: {
+      keyword,
+    }
   });
   return res.data;
 }
