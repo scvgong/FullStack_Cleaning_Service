@@ -28,16 +28,16 @@ public class BusinessQuoteController {
 //        return ResponseEntity.ok(quotes);
 //    }
 
-    // 견적 리스트 전체조회
-    @GetMapping
-    public ResponseEntity<List<BusinessQuoteResponseDto>> list() {
-        List<BusinessQuoteResponseDto> quotes = service.getAllQuotes();
-        return ResponseEntity.ok(quotes);
-    }
-
+    // 리스트 전체 조회 및 검색키워드 처리
     @GetMapping
     public ResponseEntity<List<BusinessQuoteResponseDto>> list(@RequestParam(required = false) String keyword) {
-        List<BusinessQuoteResponseDto> quotes = service.getQuotesByKeyword(keyword);
+        List<BusinessQuoteResponseDto> quotes;
+        if(keyword != null && !keyword.isBlank()){
+            quotes = service.getQuotesByKeyword(keyword);
+        } else {
+            quotes = service.getAllQuotes();
+        }
+
         return ResponseEntity.ok(quotes);
     }
 

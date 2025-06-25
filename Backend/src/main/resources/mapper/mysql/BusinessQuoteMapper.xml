@@ -88,7 +88,8 @@
             <if test="keyword != null and keyword != ''">
                 (qr.name LIKE CONCAT('%', #{keyword}, '%')
                 OR qr.phone LIKE CONCAT('%', #{keyword}, '%')
-                OR qr.email LIKE CONCAT('%', #{keyword}, '%'))
+                OR qr.email LIKE CONCAT('%', #{keyword}, '%')
+                OR qr.service_type LIKE CONCAT('%', #{keyword}, '%'))
             </if>
         </where>
     </select>
