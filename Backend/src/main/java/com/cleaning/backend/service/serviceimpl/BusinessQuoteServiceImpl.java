@@ -22,7 +22,21 @@ public class BusinessQuoteServiceImpl implements BusinessQuoteService {
     }
 
     @Override
-    public BusinessQuoteResponseDto getQuoteDetail(Long id, String category) {
-        return mapper.findByIdAndCategory(id, category);
+    public BusinessQuoteResponseDto getQuoteDetail(Long id) {
+        return mapper.findByIdAndCategory(id);
+    }
+
+    @Override
+    public List<BusinessQuoteResponseDto> getAllQuotes() {
+        List<BusinessQuoteResponseDto> list = mapper.findAll();
+        list.forEach(q -> q.setImages(mapper.findImagesByQuoteId(q.getId())));
+        return list;
+    }
+
+    @Override
+    public List<BusinessQuoteResponseDto> getQuotesByKeyword(String keyword) {
+        List<BusinessQuoteResponseDto> list = mapper.findByKeyword(keyword);
+        list.forEach(q -> q.setImages(mapper.findImagesByQuoteId(q.getId())));
+        return list;
     }
 }

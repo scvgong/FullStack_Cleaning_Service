@@ -65,6 +65,7 @@ public class AdminUserServiceImpl implements AdminUserService {
             throw new IllegalArgumentException("존재하지 않는 관리자입니다.");
         }
         user.setRole(role);
+        System.out.println("user role : " + user);
         adminUserMapper.updateAdminUserRole(id, role);
     }
 }

@@ -11,5 +11,9 @@ public interface BusinessQuoteMapper {
     List<BusinessQuoteResponseDto> findByCategory(@Param("category") String category);
     List<String> findImagesByQuoteId(@Param("quoteId") Long quoteId);
 
-    BusinessQuoteResponseDto findByIdAndCategory(Long id, String category);
+    BusinessQuoteResponseDto findByIdAndCategory(Long id);
+
+    List<BusinessQuoteResponseDto> findAll();
+
+    List<BusinessQuoteResponseDto> findByKeyword(@Param("keyword") String keyword);
 }

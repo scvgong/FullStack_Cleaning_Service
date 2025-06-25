@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface BusinessQuoteService {
     List<BusinessQuoteResponseDto> getQuotesForCategory(String category);
-    BusinessQuoteResponseDto getQuoteDetail(Long id, String category);
+    BusinessQuoteResponseDto getQuoteDetail(Long id);
+    List<BusinessQuoteResponseDto> getAllQuotes();
+
+    List<BusinessQuoteResponseDto> getQuotesByKeyword(String keyword);
 }

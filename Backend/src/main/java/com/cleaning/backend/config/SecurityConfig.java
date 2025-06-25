@@ -62,8 +62,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,   "/api/admin/inquiries/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,    "/api/admin/inquiries/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/admin/inquiries/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/admin/users/*/role").hasRole("SUPER_ADMIN")
                         .requestMatchers("/api/admin/users").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/admin/users/*/role").hasRole("ADMIN")
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가

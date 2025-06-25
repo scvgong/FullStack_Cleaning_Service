@@ -20,6 +20,19 @@
         WHERE qr.service_type = #{category, jdbcType=VARCHAR}
     </select>
 
+    <select id="findAll" resultType="com.cleaning.backend.dto.BusinessQuoteResponseDto">
+        SELECT qr.id,
+        qr.service_type AS serviceType,
+        qr.space_type   AS spaceType,
+        qr.area,
+        qr.name,
+        qr.phone,
+        qr.email,
+        qr.location,
+        qr.message
+        FROM quote_request qr
+    </select>
+
     <!-- 이미지는 별도 쿼리 또는 조인으로 가져와도 됩니다 -->
     <select id="findImagesByQuoteId" resultType="String">
         SELECT file_path
@@ -42,7 +55,6 @@
         FROM quote_request qr
         LEFT JOIN quote_images qi ON qi.quote_id = qr.id
         WHERE qr.id = #{id}
-        AND qr.service_type = #{category}
     </select>
 
     <resultMap id="DetailMap" type="com.cleaning.backend.dto.BusinessQuoteResponseDto">
@@ -60,5 +72,25 @@
             <result column="imageUrl"/>
         </collection>
     </resultMap>
+
+    <select id="findByKeyword" resultType="com.cleaning.backend.dto.BusinessQuoteResponseDto">
+        SELECT qr.id,
+        qr.service_type AS serviceType,
+        qr.space_type   AS spaceType,
+        qr.area,
+        qr.name,
+        qr.phone,
+        qr.email,
+        qr.location,
+        qr.message
+        FROM quote_request qr
+        <where>
+            <if test="keyword != null and keyword != ''">
+                (qr.name LIKE CONCAT('%', #{keyword}, '%')
+                OR qr.phone LIKE CONCAT('%', #{keyword}, '%')
+                OR qr.email LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+    </select>
 
 </mapper>

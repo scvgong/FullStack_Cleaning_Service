@@ -38,20 +38,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(token)) {
 //                String username = jwtUtil.extractUsername(token);
                 Claims claims = jwtUtil.extractAllClaims(token);
-                String role  = claims.get("role", String.class);
+//                String role  = claims.get("role", String.class);
+                Object roleObj = claims.get("role");
 
-                // 2) role 클레임을 이용해 GrantedAuthority 생성
-                List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+                String role = null;
 
-                // 3) principal 에 Claims 객체, credentials 는 null
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(
-                                claims,       // ← principal: Claims
-                                null,         // ← credentials
-                                authorities   // ← authorities
-                        );
+                if(roleObj instanceof  List<?> roleList && !roleList.isEmpty()){
+                    role = roleList.get(0).toString();
+                } else if(roleObj instanceof String str){
+                    role = str;
+                }
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                System.out.println("🛡️ JWT 필터 통과됨: claims = " + claims + ", role = " + role);
+
+                if(role != null) {
+                    // 2) role 클레임을 이용해 GrantedAuthority 생성
+                    List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+
+                    // 3) principal 에 Claims 객체, credentials 는 null
+                    UsernamePasswordAuthenticationToken auth =
+                            new UsernamePasswordAuthenticationToken(
+                                    claims.getSubject(),       // ← principal: Username
+                                    null,         // ← credentials
+                                    authorities   // ← authorities
+                            );
+
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+
             }
         }
 
