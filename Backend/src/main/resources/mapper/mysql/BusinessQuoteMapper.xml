@@ -94,4 +94,42 @@
         </where>
     </select>
 
+    <select id="searchQuotes" resultType="com.cleaning.backend.dto.BusinessQuoteResponseDto">
+        SELECT qr.id, qr.service_type AS serviceType, qr.space_type AS spaceType,
+        qr.area, qr.name, qr.phone, qr.email, qr.location, qr.message
+        FROM quote_request qr
+        <where>
+            <if test="keyword != null and keyword != ''">
+                (qr.name LIKE CONCAT('%', #{keyword}, '%')
+                OR qr.phone LIKE CONCAT('%', #{keyword}, '%')
+                OR qr.email LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="serviceType != null and serviceType != ''">
+                AND qr.service_type = #{serviceType}
+            </if>
+            <if test="spaceType != null and spaceType != ''">
+                AND qr.space_type = #{spaceType}
+            </if>
+        </where>
+        ORDER BY qr.id DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countSearchQuotes" resultType="int">
+        SELECT COUNT(*) FROM quote_request qr
+        <where>
+            <if test="keyword != null and keyword != ''">
+                (qr.name LIKE CONCAT('%', #{keyword}, '%')
+                OR qr.phone LIKE CONCAT('%', #{keyword}, '%')
+                OR qr.email LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="serviceType != null and serviceType != ''">
+                AND qr.service_type = #{serviceType}
+            </if>
+            <if test="spaceType != null and spaceType != ''">
+                AND qr.space_type = #{spaceType}
+            </if>
+        </where>
+    </select>
+
 </mapper>

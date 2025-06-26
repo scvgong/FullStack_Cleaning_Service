@@ -1,6 +1,7 @@
 package com.cleaning.backend.service.serviceimpl;
 
 import com.cleaning.backend.dto.BusinessQuoteResponseDto;
+import com.cleaning.backend.dto.PagedResponseDto;
 import com.cleaning.backend.mapper.BusinessQuoteMapper;
 import com.cleaning.backend.service.BusinessQuoteService;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,17 @@ public class BusinessQuoteServiceImpl implements BusinessQuoteService {
         List<BusinessQuoteResponseDto> list = mapper.findByKeyword(keyword);
         list.forEach(q -> q.setImages(mapper.findImagesByQuoteId(q.getId())));
         return list;
+    }
+
+    @Override
+    public PagedResponseDto<BusinessQuoteResponseDto> searchQuotes(String keyword, String serviceType, String spaceType, int page, int size) {
+        int offset = (page - 1) * size;
+
+        List<BusinessQuoteResponseDto> list = mapper.searchQuotes(keyword, serviceType, spaceType, size, offset);
+        int total = mapper.countSearchQuotes(keyword, serviceType, spaceType);
+
+        list.forEach(q -> q.setImages(mapper.findImagesByQuoteId(q.getId())));
+
+        return new PagedResponseDto<>(list, page, size, (int) Math.ceil((double) total / size), total);
     }
 }

@@ -16,4 +16,18 @@ public interface BusinessQuoteMapper {
     List<BusinessQuoteResponseDto> findAll();
 
     List<BusinessQuoteResponseDto> findByKeyword(@Param("keyword") String keyword);
+
+    List<BusinessQuoteResponseDto> searchQuotes(
+            @Param("keyword") String keyword,
+            @Param("serviceType") String serviceType,
+            @Param("spaceType") String spaceType,
+            @Param("size") int size,
+            @Param("offset") int offset
+    );
+
+    int countSearchQuotes(
+            @Param("keyword") String keyword,
+            @Param("serviceType") String serviceType,
+            @Param("spaceType") String spaceType
+    );
 }

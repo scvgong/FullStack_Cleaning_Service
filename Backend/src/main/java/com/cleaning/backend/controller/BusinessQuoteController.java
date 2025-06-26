@@ -1,6 +1,7 @@
 package com.cleaning.backend.controller;
 
 import com.cleaning.backend.dto.BusinessQuoteResponseDto;
+import com.cleaning.backend.dto.PagedResponseDto;
 import com.cleaning.backend.service.BusinessQuoteService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -30,15 +31,17 @@ public class BusinessQuoteController {
 
     // 리스트 전체 조회 및 검색키워드 처리
     @GetMapping
-    public ResponseEntity<List<BusinessQuoteResponseDto>> list(@RequestParam(required = false) String keyword) {
-        List<BusinessQuoteResponseDto> quotes;
-        if(keyword != null && !keyword.isBlank()){
-            quotes = service.getQuotesByKeyword(keyword);
-        } else {
-            quotes = service.getAllQuotes();
-        }
+    public ResponseEntity<PagedResponseDto<BusinessQuoteResponseDto>> list(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String serviceType,
+            @RequestParam(required = false) String spaceType,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
 
-        return ResponseEntity.ok(quotes);
+        return ResponseEntity.ok(
+                service.searchQuotes(keyword, serviceType, spaceType, page, size)
+        );
     }
 
     // 상세 조회 추가
