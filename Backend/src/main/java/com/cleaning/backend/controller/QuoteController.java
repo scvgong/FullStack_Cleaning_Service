@@ -29,7 +29,7 @@ public class QuoteController {
         long maxSize = 5 * 1024 * 1024;
         List<String> allowedTypes = List.of("image/jpeg","image/png");
 
-        if(images != null){
+        if(images != null && !images.isEmpty()){
             for(MultipartFile file : images){
                 if(!allowedTypes.contains(file.getContentType())){
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미지 형식만 가능합니다.");
