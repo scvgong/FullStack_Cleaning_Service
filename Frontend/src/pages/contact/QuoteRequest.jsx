@@ -121,9 +121,7 @@ const QuoteRequest = () => {
 
     if (images.length > 0) {
       images.forEach((file) => formData.append("images", file));
-    } else {
-      formData.append("images", new Blob([]), "");
-    }
+    } 
 
     try {
       const response = await fetch("http://localhost:8080/api/quotes", {

@@ -16,9 +16,12 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
   
     return (
       <div className="flex items-center justify-center space-x-2 mt-6">
-        {page > 1 && (
-          <button onClick={() => onPageChange(1)}>&laquo;</button>
-        )}
+        <button
+        onClick={() => onPageChange(1)}
+        className="px-3 py-1 rounded bg-gray-300 hover:bg-gray-400"
+      >
+        &laquo;
+      </button>
         {getPageRange().map((p) => (
           <button
             key={p}
@@ -30,9 +33,13 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
             {p}
           </button>
         ))}
-        {page < totalPages && (
-          <button onClick={() => onPageChange(totalPages)}>&raquo;</button>
-        )}
+        {/* 항상 >> 마지막 페이지 버튼 표시 */}
+      <button
+        onClick={() => onPageChange(totalPages)}
+        className="px-3 py-1 rounded bg-gray-300 hover:bg-gray-400"
+      >
+        &raquo;
+      </button>
       </div>
     );
   };
