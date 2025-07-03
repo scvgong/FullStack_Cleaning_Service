@@ -7,7 +7,6 @@ const FaqCreate = () => {
     const [answer , setAnswer] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState("");
-    const token = localStorage.getItem("adminToken");
 
     const handleSubmit = async (e) => {
         e.preventDefault();

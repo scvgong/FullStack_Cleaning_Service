@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/quotes")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class QuoteController {
 
     private final QuoteRequestService quoteRequestService;

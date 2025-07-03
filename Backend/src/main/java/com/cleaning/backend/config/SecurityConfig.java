@@ -48,9 +48,9 @@ public class SecurityConfig {
                         .requestMatchers("/uploads/**").permitAll() // 정적 파일 허용
                         .requestMatchers("/api/admin/auth/**").permitAll() // 관리자 로그인 관련 API 허용
                         .requestMatchers("/api/business/auth/**").permitAll() // 사업자 로그인 관련 API 허용
-                        .requestMatchers("/api/quotes").permitAll() // ✅ 사용자 견적 요청 허용
+                        .requestMatchers(HttpMethod.POST,"/api/quotes").permitAll() // ✅ 사용자 견적 요청 허용
                         .requestMatchers("/api/business/register").permitAll() // 사업자 회원가입 요청 허용
-                        .requestMatchers("/api/admin/faqs/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/faqs/**").permitAll()
                         .requestMatchers("/api/business/quotes/**").hasRole("BUSINESS") // 사업자 게시판 요청 허용
                         .requestMatchers("/api/business/inquiries").hasRole("BUSINESS")
                         .requestMatchers(HttpMethod.GET,    "/api/business/inquiries/**").hasRole("BUSINESS")

@@ -35,3 +35,4 @@ file:
 logging:
   level:
     org.springframework.web.multipart: DEBUG
+    org.springframework.security: DEBUG
