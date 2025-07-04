@@ -7,11 +7,11 @@
     <insert id="insertBusinessUser">
         INSERT INTO BUSINESS_USER (
         ID, USERNAME, PASSWORD, NAME, BUSINESS_NO,
-        PHONE, ALT_PHONE, BIZ_DOC_PATH, CATEGORY, CREATED_AT
+        PHONE, ALT_PHONE, BIZ_DOC_PATH, CREATED_AT
         ) VALUES (
         #{dto.id},
         #{dto.username}, #{dto.password}, #{dto.name}, #{dto.businessNo},
-        #{dto.phone}, #{dto.altPhone}, #{filePath}, #{dto.category}, NOW()
+        #{dto.phone}, #{dto.altPhone}, #{filePath}, NOW()
         )
     </insert>
 
@@ -25,9 +25,36 @@
         PHONE,
         ALT_PHONE,
         BIZ_DOC_PATH,
-        CATEGORY,
         CREATED_AT
         FROM BUSINESS_USER
         WHERE USERNAME = #{username}
     </select>
+
+    <select id="findById" parameterType="long" resultType="com.cleaning.backend.model.BusinessUser">
+        SELECT
+        id,
+        username,
+        name,
+        business_no,
+        phone,
+        alt_phone,
+        biz_doc_path,
+        created_at
+        FROM business_user
+        WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.cleaning.backend.model.BusinessUser">
+        UPDATE business_user
+        SET name = #{name},
+        phone = #{phone},
+        alt_phone = #{altPhone}
+        <if test="password != null">
+            , password = #{password}
+        </if>
+        <if test="bizDocPath != null">
+            , biz_doc_path = #{bizDocPath}
+        </if>
+        WHERE id = #{id}
+    </update>
 </mapper>

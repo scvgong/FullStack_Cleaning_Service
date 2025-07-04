@@ -1,13 +1,15 @@
 package com.cleaning.backend.config;
 
-import com.cleaning.backend.filter.JwtAuthenticationFilter;
+import com.cleaning.backend.repository.BusinessUserRepository;
+import com.cleaning.backend.security.JwtAuthenticationFilter;
 import com.cleaning.backend.service.AdminUserDetailsService;
+import com.cleaning.backend.service.BusinessUserDetailsService;
 import com.cleaning.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,6 +32,13 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final AdminUserDetailsService adminUserDetailsService;
+    private final BusinessUserDetailsService businessUserDetailsService;
+    private final BusinessUserRepository businessUserRepository;
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtUtil, businessUserRepository);
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -50,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/business/auth/**").permitAll() // 사업자 로그인 관련 API 허용
                         .requestMatchers(HttpMethod.POST,"/api/quotes").permitAll() // ✅ 사용자 견적 요청 허용
                         .requestMatchers("/api/business/register").permitAll() // 사업자 회원가입 요청 허용
+                        .requestMatchers("/api/business/me").hasRole("BUSINESS")
                         .requestMatchers("/api/admin/faqs/**").permitAll()
                         .requestMatchers("/api/business/quotes/**").hasRole("BUSINESS") // 사업자 게시판 요청 허용
                         .requestMatchers("/api/business/inquiries").hasRole("BUSINESS")
@@ -66,7 +76,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/admin/users/*/role").hasRole("ADMIN")
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가
+                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, businessUserRepository), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가
         return http.build();
     }
 
@@ -75,17 +85,52 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
 
+
+    // 관리용 Provider
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
+    public DaoAuthenticationProvider adminAuthProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(adminUserDetailsService); // ⬅️ 여기에 우리가 만든 서비스 사용
+        provider.setUserDetailsService(adminUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
+
+    // 사업자용 Provider
+    @Bean
+    public DaoAuthenticationProvider businessAuthProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(businessUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
+    // 둘다 등록
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//        return configuration.getAuthenticationManager();
+//    }
+
+    // ✅ 이 부분이 핵심입니다 둘다 등록
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        DaoAuthenticationProvider adminProvider = new DaoAuthenticationProvider();
+        adminProvider.setUserDetailsService(adminUserDetailsService);
+        adminProvider.setPasswordEncoder(passwordEncoder());
+
+        DaoAuthenticationProvider businessProvider = new DaoAuthenticationProvider();
+        businessProvider.setUserDetailsService(businessUserDetailsService);
+        businessProvider.setPasswordEncoder(passwordEncoder());
+
+        return new ProviderManager(List.of(adminProvider, businessProvider));
+    }
+
+//    // 둘 다 등록
+//    @Bean
+//    public AuthenticationManager authenticationManager(
+//            AuthenticationConfiguration config
+//    ) throws Exception {
+//        return config.getAuthenticationManager();
+//    }
 
 }

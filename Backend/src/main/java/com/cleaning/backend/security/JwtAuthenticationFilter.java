@@ -1,13 +1,16 @@
-package com.cleaning.backend.filter;
+package com.cleaning.backend.security;
 
 
+import com.cleaning.backend.model.BusinessUser;
+import com.cleaning.backend.model.auth.BusinessUserDetails;
+import com.cleaning.backend.repository.BusinessUserRepository;
 import com.cleaning.backend.util.JwtUtil;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,16 +19,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-
-    public JwtAuthenticationFilter(JwtUtil jwtUtil){
-        this.jwtUtil = jwtUtil;
-    }
+    private final BusinessUserRepository businessUserRepository; // ✅ 추가
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -36,36 +36,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             if (jwtUtil.validateToken(token)) {
-//                String username = jwtUtil.extractUsername(token);
                 Claims claims = jwtUtil.extractAllClaims(token);
-//                String role  = claims.get("role", String.class);
+
+                // ✅ Role 추출
                 Object roleObj = claims.get("role");
-
                 String role = null;
-
-                if(roleObj instanceof  List<?> roleList && !roleList.isEmpty()){
+                if (roleObj instanceof List<?> roleList && !roleList.isEmpty()) {
                     role = roleList.get(0).toString();
-                } else if(roleObj instanceof String str){
+                } else if (roleObj instanceof String str) {
                     role = str;
                 }
 
-                System.out.println("🛡️ JWT 필터 통과됨: claims = " + claims + ", role = " + role);
+                if (role != null && role.equals("BUSINESS")) {
+                    // ✅ principal 을 BusinessUserDetails 로 설정
+                    String username = claims.getSubject();
+                    BusinessUser user = businessUserRepository.findByUsername(username)
+                            .orElseThrow(() -> new RuntimeException("User not found"));
 
-                if(role != null) {
-                    // 2) role 클레임을 이용해 GrantedAuthority 생성
-                    List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+                    BusinessUserDetails userDetails = new BusinessUserDetails(user);
 
-                    // 3) principal 에 Claims 객체, credentials 는 null
                     UsernamePasswordAuthenticationToken auth =
                             new UsernamePasswordAuthenticationToken(
-                                    claims.getSubject(),       // ← principal: Username
-                                    null,         // ← credentials
-                                    authorities   // ← authorities
+                                    userDetails,
+                                    null,
+                                    List.of(new SimpleGrantedAuthority("ROLE_" + role))
                             );
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
-
             }
         }
 

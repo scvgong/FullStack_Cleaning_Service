@@ -9,4 +9,8 @@ import org.apache.ibatis.annotations.Param;
 public interface BusinessUserMapper {
     BusinessUser findByUsername(@Param("username") String username);
     void insertBusinessUser(@Param("dto") BusinessUserRegisterDto dto, @Param("filePath") String filePath);
+
+    BusinessUser findById(Long userId);
+
+    void update(BusinessUser user);
 }

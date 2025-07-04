@@ -37,12 +37,11 @@ public class JwtUtil {
     }
 
     // 오버로드: username, role, id 직접 전달
-    public String generateToken(String username, String role, Long userId, String category) {
+    public String generateToken(String username, String role, Long userId) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role)
                 .claim("userId", userId)
-                .claim("category", category)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)

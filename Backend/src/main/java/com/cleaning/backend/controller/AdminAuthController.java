@@ -43,7 +43,7 @@ public class AdminAuthController {
             User user =  (User) authentication.getPrincipal();
 
             //JWT 발급(role, id는 DB에서 따로 조회하거나 추후 커스텀 UserDetails 구현시 추가 가능)
-            String token = jwtUtil.generateToken(user.getUsername(), user.getAuthorities().toString(), null, null);
+            String token = jwtUtil.generateToken(user.getUsername(), user.getAuthorities().toString(), null);
 
             return ResponseEntity.ok(Map.of("token",token));
         } catch( BadCredentialsException e) {
