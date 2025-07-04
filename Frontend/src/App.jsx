@@ -32,6 +32,7 @@ import BusinessQuoteDetail from "./pages/business/BusinessQuoteDetail";
 import BusinessInquiryList from "./pages/business/BusinessInquiryList";
 import BusinessInquiryDetail from "./pages/business/BusinessInquiryDetail";
 import BusinessInquiryCreate from "./pages/business/BusinessInquiryCreate";
+import BusinessMyPage from "./pages/business/BusinessMyPage";
 
 import FaqCreate from "./pages/admin/FaqCreate";
 import FaqList from "./pages/admin/FaqList";
@@ -87,6 +88,7 @@ function App() {
         {/* 사업자용 Routes */}
         <Route path="business" element={<BizLayout />}>
           <Route path="register" element={<BusinessRegister />} />
+          <Route path="mypage" element={<BusinessMyPage />} />
           <Route path="login" element={<AuthLogin />} />
           <Route path="/business/login" element={<AuthLogin />} />
           <Route path="dashboard" element={<BusinessDashboard />} />

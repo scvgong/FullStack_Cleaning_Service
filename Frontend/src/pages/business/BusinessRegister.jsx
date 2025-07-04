@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { registerBusinessUser } from "../../api/businessApi";
 
 const BusinessRegister = () => {
   const navigate = useNavigate();
@@ -9,7 +10,6 @@ const BusinessRegister = () => {
     password: "",
     name: "",
     role: "BUSINESS",
-    category: "",
     phone: "",
     mobile: "",
     businessNo: "",
@@ -33,30 +33,14 @@ const BusinessRegister = () => {
       setError("연락처 또는 휴대폰 번호 중 하나는 입력해야 합니다.");
       return;
     }
-
+  
     if (!form.businessNo.match(/^\d+$/)) {
       setError("사업자 번호는 숫자만 입력 가능합니다.");
       return;
     }
-
-    const formData = new FormData();
-    formData.append(
-      "data",
-      new Blob([JSON.stringify(form)], { type: "application/json" })
-    );
-    if (certFile) {
-      formData.append("certFile", certFile);
-    }
+  
     try {
-      await axios.post(
-        "http://localhost:8080/api/business/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await registerBusinessUser(form, certFile);
       alert("회원가입이 완료되었습니다!");
       navigate("/admin/login");
     } catch (err) {
@@ -64,6 +48,7 @@ const BusinessRegister = () => {
       setError("회원가입에 실패했습니다.");
     }
   };
+  
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow">
@@ -127,20 +112,6 @@ const BusinessRegister = () => {
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
         />
-        <select
-          name="category"
-          value={form.category}
-          onChange={handleChange}
-          required
-          className="w-full border px-3 py-2 rounded"
-        >
-          <option value="">서비스 유형 선택</option>
-          <option value="입주청소">입주청소</option>
-          <option value="인테리어청소">인테리어청소</option>
-          <option value="준공청소">준공청소</option>
-          <option value="카펫청소">카펫청소</option>
-          <option value="외벽청소">외벽청소</option>
-        </select>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 

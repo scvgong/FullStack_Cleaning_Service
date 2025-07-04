@@ -46,7 +46,7 @@ const BusinessDashboard = () => {
             견적 요청 목록 보기
           </Link>
           <Link
-            to="/business/profile"
+            to="/business/mypage"
             className="block p-4 bg-green-100 rounded hover:bg-green-200"
           >
             내 정보 관리
