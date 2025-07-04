@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BusinessDashboard = () => {
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 예시: 토큰에서 username을 꺼내거나, API로 프로필 정보를 가져올 수 있습니다.
@@ -27,7 +29,7 @@ const BusinessDashboard = () => {
           className="text-sm text-red-600 hover:underline"
           onClick={() => {
             localStorage.removeItem("businessToken");
-            window.location.href = "/auth/login";
+            navigate("/business/login");
           }}
         >
           로그아웃
