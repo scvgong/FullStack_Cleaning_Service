@@ -105,12 +105,6 @@ public class SecurityConfig {
         return provider;
     }
 
-    // 둘다 등록
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-//        return configuration.getAuthenticationManager();
-//    }
-
     // ✅ 이 부분이 핵심입니다 둘다 등록
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -124,13 +118,5 @@ public class SecurityConfig {
 
         return new ProviderManager(List.of(adminProvider, businessProvider));
     }
-
-//    // 둘 다 등록
-//    @Bean
-//    public AuthenticationManager authenticationManager(
-//            AuthenticationConfiguration config
-//    ) throws Exception {
-//        return config.getAuthenticationManager();
-//    }
 
 }
