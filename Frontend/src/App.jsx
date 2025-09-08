@@ -42,6 +42,9 @@ import AdminInquiryList from "./pages/admin/AdminInquiryList";
 import AdminInquiryDetail from "./pages/admin/AdminInquiryDetail";
 import AdminInquiryCompletedList from "./pages/admin/AdminInquiryCompletedList";
 
+import MemberRegister from "./pages/member/MemberRegister";
+import MemberLogin from "./pages/member/MemberLogin";
+import ProtectedMemberRoute from "./components/ProtectedMemberRoute";
 
 function App() {
   return (
@@ -54,16 +57,22 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="home-cleaning/move-in" element={<MoveInCleaning />} />
           <Route path="home-cleaning/interior" element={<InteriorCleaning />} />
-          <Route
-            path="business-cleaning/construction"
-            element={<ConstructionCleaning />}
-          />
+          <Route path="business-cleaning/construction" element={<ConstructionCleaning />}/>
           <Route path="special-cleaning/carpet" element={<CarpetCleaning />} />
           <Route path="special-cleaning/wall" element={<WallCleaning />} />
           <Route path="contact/quote" element={<QuoteRequest />} />
           <Route path="gallery" element={<Gallery />} />
+          <Route path="member/register" element={<MemberRegister />} />
+          <Route path="member/login" element={<MemberLogin />} />
           {/* 로그인 링크도 여기로 */}
           <Route path="admin/login" element={<AuthLogin />} />
+          {/* 견적요청: 로그인 필요하도록 보호 */}
+          <Route path="contact/quote" element={
+              <ProtectedMemberRoute>
+                <QuoteRequest />
+              </ProtectedMemberRoute>
+            }
+          />
         </Route>
 
         {/* 관리자용용 Routes */}
