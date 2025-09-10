@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { loginMember, fetchMemberProfile } from "../../api/memberApi";
 
 const MemberLogin = () => {
     const navigate = useNavigate();
