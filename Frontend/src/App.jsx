@@ -60,7 +60,6 @@ function App() {
           <Route path="business-cleaning/construction" element={<ConstructionCleaning />}/>
           <Route path="special-cleaning/carpet" element={<CarpetCleaning />} />
           <Route path="special-cleaning/wall" element={<WallCleaning />} />
-          <Route path="contact/quote" element={<QuoteRequest />} />
           <Route path="gallery" element={<Gallery />} />
           <Route path="member/register" element={<MemberRegister />} />
           <Route path="member/login" element={<MemberLogin />} />
@@ -69,7 +68,7 @@ function App() {
           {/* 견적요청: 로그인 필요하도록 보호 */}
           <Route path="contact/quote" element={
               <ProtectedMemberRoute>
-                <QuoteRequest />
+                <Route path="contact/quote" element={<QuoteRequest />} />
               </ProtectedMemberRoute>
             }
           />

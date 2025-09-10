@@ -8,12 +8,6 @@ function authHeaders() {
   return { Authorization: `Bearer ${token}` };
 }
 
-//고객 로그인
-export async function loginAdmin(username, password) {
-  const res = await axios.post(`${ADMIN_BASE_URL}/auth/login`, { username, password });
-  return res.data.token; // { token }
-}
-
 // 1) 관리자 로그인
 export const loginAdmin = async (username, password) => {
   const { data } = await axios.post(
